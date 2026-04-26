@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Kite Connect API Suite — R Sushmitha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#FFFFFF;--bg2:#F8FFFE;--bg3:#F4F4F4;--text:#1A1A1A;--text2:#4A4A4A;--text3:#888;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.15);--teal-dark:#1E9E8A;--border:#E8E8E8;--card:#FFFFFF;--code-bg:#F6F8FA;--card-shadow:0 2px 12px rgba(0,0,0,0.06)}
+[data-theme="dark"]{--bg:#13120F;--bg2:#1B1916;--bg3:#1F1D19;--text:#F0EDE6;--text2:#B0A898;--text3:#666;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.12);--teal-dark:#25A090;--border:#2A2825;--card:#1F1D19;--code-bg:#161410;--card-shadow:0 2px 12px rgba(0,0,0,0.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:60px;transition:background .3s}
+.logo{font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--text)}
+.logo span{color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:13px;font-weight:700;color:var(--text3);padding-bottom:2px;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--text);border-bottom:2.5px solid var(--teal)}
+.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text3);cursor:pointer;transition:all .2s}
+.theme-btn:hover{border-color:var(--teal);color:var(--teal)}
+
+.proj-hero{padding:3rem 2.5rem 2rem;border-bottom:1px solid var(--border)}
+.back-link{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);margin-bottom:1.2rem;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.back-link:hover{color:var(--teal)}
+.proj-meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.meta-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:4px 12px;border-radius:20px;letter-spacing:.5px}
+.proj-hero-title{font-size:clamp(26px,4vw,40px);font-weight:900;color:var(--text);margin-bottom:0.8rem;line-height:1.2}
+.proj-hero-sub{font-size:15px;color:var(--text2);line-height:1.7;max-width:620px}
+
+.proj-body{max-width:820px;margin:0 auto;padding:2.5rem}
+.section-head{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem;margin-top:2.5rem}
+.section-head:first-of-type{margin-top:0}
+h2{font-size:20px;font-weight:800;color:var(--text);margin-bottom:1rem}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:1rem}
+ul{padding-left:1.2rem;margin-bottom:1rem}
+ul li{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:4px}
+ul li::marker{color:var(--teal)}
+
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;box-shadow:var(--card-shadow)}
+.info-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.info-val{font-size:14px;font-weight:700;color:var(--text)}
+
+.step-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem}
+.step{display:flex;gap:1rem;align-items:flex-start}
+.step-num{min-width:32px;height:32px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0}
+.step-content{}
+.step-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.65}
+
+.code-block{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.5rem}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:10px 16px;border-bottom:1px solid var(--border)}
+.code-filename{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3)}
+.code-lang{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:2px 8px;border-radius:4px}
+pre{padding:1.2rem 1.5rem;overflow-x:auto;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.7;color:var(--text)}
+.c-kw{color:#D73A49} /* keywords */
+.c-fn{color:#2DBFA8} /* functions/teal */
+.c-str{color:#22863A} /* strings */
+.c-cm{color:#999} /* comments */
+.c-num{color:#E36209} /* numbers */
+
+.video-placeholder{background:var(--bg3);border:2px dashed var(--border);border-radius:12px;padding:3rem;text-align:center;margin-bottom:1.5rem}
+.video-icon{font-size:40px;margin-bottom:0.8rem}
+.video-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:0.4rem}
+.video-sub{font-size:13px;color:var(--text3);margin-bottom:1.2rem}
+.upload-btn{display:inline-block;background:var(--teal);color:#fff;font-size:13px;font-weight:700;padding:10px 22px;border-radius:8px;cursor:pointer;transition:background .2s;font-family:'Nunito',sans-serif}
+.upload-btn:hover{background:var(--teal-dark)}
+
+.nav-proj{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.nav-proj a{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);transition:color .2s;display:flex;align-items:center;gap:5px}
+.nav-proj a:hover{color:var(--teal)}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.footer-name{font-size:16px;font-weight:900;color:var(--text)}
+.footer-name span{color:var(--teal)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;width:100%;text-align:center}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">SUSHM<span>ITHA</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<div class="proj-hero">
+  <a href="projects.html" class="back-link">← All Projects</a>
+  <div class="proj-meta-row">
+    <span class="meta-tag">Python</span>
+    <span class="meta-tag">pykiteconnect</span>
+    <span class="meta-tag">WebSocket</span>
+    <span class="meta-tag">Zerodha</span>
+  </div>
+  <h1 class="proj-hero-title">🔌 Kite Connect API Study Suite</h1>
+  <p class="proj-hero-sub">A comprehensive reference covering all 41 KiteConnect Python functions, KiteTicker WebSocket streaming with live tick data, callback handlers, auto-reconnect logic, and order management — all documented as a structured study guide.</p>
+</div>
+
+<div class="proj-body">
+
+  <!-- Overview -->
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">Language</div><div class="info-val">Python 3</div></div>
+    <div class="info-card"><div class="info-label">Library</div><div class="info-val">pykiteconnect v4</div></div>
+    <div class="info-card"><div class="info-label">Output</div><div class="info-val">PDF Reference Guide</div></div>
+  </div>
+
+  <!-- What I built -->
+  <div class="section-head">Overview</div>
+  <h2>What I Built</h2>
+  <p>This project is a comprehensive deep-dive into Zerodha's <strong>Kite Connect API</strong> using the official <code>pykiteconnect</code> Python library. I documented every function, method, and callback available in the v4 SDK — turning scattered documentation into a clean, printable PDF reference.</p>
+  <p>The study suite covers two main components of the SDK: <strong>KiteConnect</strong> (REST API for orders, portfolio, instruments) and <strong>KiteTicker</strong> (WebSocket for live streaming market data).</p>
+
+  <!-- How I built it -->
+  <div class="section-head">Process</div>
+  <h2>How I Created It</h2>
+  <div class="step-list">
+    <div class="step">
+      <div class="step-num">1</div>
+      <div class="step-content">
+        <div class="step-title">Studied the official docs</div>
+        <div class="step-desc">Read through kite.trade/docs/pykiteconnect/v4 and mapped out all available functions across KiteConnect and KiteTicker classes.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">2</div>
+      <div class="step-content">
+        <div class="step-title">Built KiteTicker WebSocket examples</div>
+        <div class="step-desc">Wrote Python scripts to connect to the ticker, subscribe to instruments, handle on_ticks, on_connect, on_close, on_error, on_reconnect and on_noreconnect callbacks.</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">3</div>
+      <div class="step-content">
+        <div class="step-title">Documented all 41 KiteConnect functions</div>
+        <div class="step-desc">Created a structured table of every REST API function — from login() and profile() to place_order(), modify_order(), get_holdings(), get_positions(), and historical_data().</div>
+      </div>
+    </div>
+    <div class="step">
+      <div class="step-num">4</div>
+      <div class="step-content">
+        <div class="step-title">Generated a PDF with ReportLab</div>
+        <div class="step-desc">Used Python's ReportLab library to compile everything into a nicely formatted, printable PDF study guide with tables, code blocks, and section headers.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Code -->
+  <div class="section-head">Code</div>
+  <h2>Key Code Snippets</h2>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-filename">kite_ticker_basic.py</span>
+      <span class="code-lang">Python</span>
+    </div>
+    <pre><span class="c-kw">from</span> kiteconnect <span class="c-kw">import</span> KiteTicker
+
+<span class="c-cm"># Initialise KiteTicker with your API key and access token</span>
+kws = <span class="c-fn">KiteTicker</span>(<span class="c-str">"your_api_key"</span>, <span class="c-str">"your_access_token"</span>)
+
+<span class="c-kw">def</span> <span class="c-fn">on_ticks</span>(ws, ticks):
+    <span class="c-cm"># Runs every time new price data arrives</span>
+    <span class="c-kw">for</span> tick <span class="c-kw">in</span> ticks:
+        <span class="c-fn">print</span>(<span class="c-str">f"Token: {tick['instrument_token']} | LTP: {tick['last_price']}"</span>)
+
+<span class="c-kw">def</span> <span class="c-fn">on_connect</span>(ws, response):
+    <span class="c-cm"># Subscribe to NIFTY 50 and RELIANCE on connection</span>
+    ws.<span class="c-fn">subscribe</span>([<span class="c-num">256265</span>, <span class="c-num">738561</span>])
+    ws.<span class="c-fn">set_mode</span>(ws.MODE_FULL, [<span class="c-num">256265</span>, <span class="c-num">738561</span>])
+
+<span class="c-kw">def</span> <span class="c-fn">on_close</span>(ws, code, reason):
+    <span class="c-fn">print</span>(<span class="c-str">f"Connection closed: {code} - {reason}"</span>)
+
+<span class="c-cm"># Assign callbacks</span>
+kws.on_ticks = on_ticks
+kws.on_connect = on_connect
+kws.on_close = on_close
+
+<span class="c-cm"># Enable auto-reconnect (max 50 retries, 60s max delay)</span>
+kws.<span class="c-fn">enable_reconnect</span>(reconnect_max_tries=<span class="c-num">50</span>)
+
+<span class="c-cm"># Start the WebSocket connection (blocking)</span>
+kws.<span class="c-fn">connect</span>()</pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header">
+      <span class="code-filename">kite_place_order.py</span>
+      <span class="code-lang">Python</span>
+    </div>
+    <pre><span class="c-kw">from</span> kiteconnect <span class="c-kw">import</span> KiteConnect
+
+kite = <span class="c-fn">KiteConnect</span>(api_key=<span class="c-str">"your_api_key"</span>)
+kite.<span class="c-fn">set_access_token</span>(<span class="c-str">"your_access_token"</span>)
+
+<span class="c-cm"># Place a market buy order for INFY on NSE</span>
+order_id = kite.<span class="c-fn">place_order</span>(
+    tradingsymbol=<span class="c-str">"INFY"</span>,
+    exchange=kite.EXCHANGE_NSE,
+    transaction_type=kite.TRANSACTION_TYPE_BUY,
+    quantity=<span class="c-num">1</span>,
+    order_type=kite.ORDER_TYPE_MARKET,
+    product=kite.PRODUCT_CNC
+)
+
+<span class="c-fn">print</span>(<span class="c-str">f"Order placed! ID: {order_id}"</span>)
+
+<span class="c-cm"># Fetch current holdings</span>
+holdings = kite.<span class="c-fn">holdings</span>()
+<span class="c-kw">for</span> h <span class="c-kw">in</span> holdings:
+    <span class="c-fn">print</span>(<span class="c-str">f"{h['tradingsymbol']}: {h['quantity']} @ avg ₹{h['average_price']:.2f}"</span>)</pre>
+  </div>
+
+  <!-- Screen Recording -->
+  <div class="section-head">Output Demo</div>
+  <h2>Screen Recording</h2>
+  <div class="video-placeholder">
+    <div class="video-icon">🎥</div>
+    <div class="video-title">Upload Your Screen Recording</div>
+    <div class="video-sub">Replace this section with your MP4 or embed a YouTube/Loom link showing the project running in your terminal.</div>
+    <div class="upload-btn">+ Add Recording</div>
+  </div>
+  <p style="font-size:13px;color:var(--text3)">To embed a video: replace the placeholder above with a <code>&lt;video src="your-recording.mp4" controls&gt;&lt;/video&gt;</code> tag, or paste a YouTube embed iframe.</p>
+
+  <!-- What I learned -->
+  <div class="section-head">Takeaways</div>
+  <h2>What I Learned</h2>
+  <ul>
+    <li>How WebSocket connections work in the context of live market data streaming</li>
+    <li>The difference between KiteConnect (REST) and KiteTicker (WebSocket) and when to use each</li>
+    <li>All major order types available in Kite: Market, Limit, SL, SL-M</li>
+    <li>How auto-reconnect with exponential backoff protects against network drops</li>
+    <li>The full lifecycle of a Kite Connect session: login → access token → API calls</li>
+  </ul>
+
+  <!-- Prev/Next nav -->
+  <div class="nav-proj">
+    <a href="projects.html">← All Projects</a>
+    <a href="project-duckdb.html">Next: Portfolio Analytics →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-name">SUSHM<span>ITHA</span></div>
+  <div class="footer-links">
+    <a href="mailto:dhjdhjsdh@gmail.com">dhjdhjsdh@gmail.com</a>
+    <a href="https://github.com/sHBDJS" target="_blank">github.com/sHBDJS</a>
+  </div>
+  <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
+</footer>
+
+<script>
+const btn=document.getElementById('themeBtn');
+btn.addEventListener('click',()=>{
+  const d=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',d?'light':'dark');
+  btn.textContent=d?'☾ Dark':'☀ Light';
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Projects — R Sushmitha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#FFFFFF;--bg2:#F8FFFE;--bg3:#F4F4F4;--text:#1A1A1A;--text2:#4A4A4A;--text3:#888;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.15);--teal-dark:#1E9E8A;--border:#E8E8E8;--card:#FFFFFF;--card-shadow:0 2px 12px rgba(0,0,0,0.06)}
+[data-theme="dark"]{--bg:#13120F;--bg2:#1B1916;--bg3:#1F1D19;--text:#F0EDE6;--text2:#B0A898;--text3:#666;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.12);--teal-dark:#25A090;--border:#2A2825;--card:#1F1D19;--card-shadow:0 2px 12px rgba(0,0,0,0.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:60px;transition:background .3s}
+.logo{font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--text)}
+.logo span{color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:13px;font-weight:700;color:var(--text3);padding-bottom:2px;transition:color .2s}
+.nav-links a:hover,.nav-links a.active{color:var(--text)}
+.nav-links a.active{border-bottom:2.5px solid var(--teal)}
+.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text3);cursor:pointer;transition:all .2s}
+.theme-btn:hover{border-color:var(--teal);color:var(--teal)}
+
+.page-hero{padding:3.5rem 2.5rem 2rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
+.page-hero .confetti{position:absolute;inset:0;pointer-events:none}
+.back-link{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);margin-bottom:1rem;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.back-link:hover{color:var(--teal)}
+.page-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem}
+.page-title{font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--text);margin-bottom:0.8rem}
+.page-sub{font-size:15px;color:var(--text2);max-width:500px}
+
+.projects-body{padding:2.5rem}
+.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem}
+.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 16px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .2s;letter-spacing:.5px}
+.filter-btn:hover,.filter-btn.on{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
+
+.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.6rem;box-shadow:var(--card-shadow);display:block;color:inherit;transition:border-color .2s,transform .15s,box-shadow .2s;position:relative;overflow:hidden}
+.proj-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--border);transition:background .2s}
+.proj-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 8px 24px rgba(45,191,168,.12)}
+.proj-card:hover::before{background:var(--teal)}
+.proj-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
+.proj-num{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--border);font-weight:600;transition:color .2s}
+.proj-card:hover .proj-num{color:var(--teal)}
+.proj-tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:0.8rem}
+.proj-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:3px 10px;border-radius:20px;letter-spacing:.5px}
+.proj-name{font-size:18px;font-weight:800;color:var(--text);margin-bottom:0.5rem;line-height:1.3}
+.proj-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:1.2rem}
+.proj-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:0.8rem}
+.proj-view{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:.5px;display:flex;align-items:center;gap:5px}
+.proj-status{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3)}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.footer-name{font-size:16px;font-weight:900;color:var(--text)}
+.footer-name span{color:var(--teal)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;width:100%;text-align:center}
+@media(max-width:640px){.proj-grid{grid-template-columns:1fr}nav,. projects-body{padding-left:1.2rem;padding-right:1.2rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">SUSHM<span>ITHA</span></a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<div class="page-hero">
+  <div class="confetti">
+    <svg style="position:absolute;top:10%;right:8%;width:18px;opacity:.7;transform:rotate(15deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#F07070"/></svg>
+    <svg style="position:absolute;top:30%;right:20%;width:14px;opacity:.65" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#F5C842"/></svg>
+    <svg style="position:absolute;top:60%;right:12%;width:16px;opacity:.7;transform:rotate(180deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#2DBFA8"/></svg>
+    <svg style="position:absolute;top:15%;right:40%;width:10px;opacity:.5;transform:rotate(30deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#AAAAAA"/></svg>
+  </div>
+  <a href="index.html" class="back-link">← Back to Home</a>
+  <div class="page-label">Portfolio</div>
+  <h1 class="page-title">My Projects</h1>
+  <p class="page-sub">A collection of things I've built — exploring Kite Connect API, Python, SQL, DuckDB and Indian stock markets.</p>
+</div>
+
+<div class="projects-body">
+  <div class="filter-row">
+    <button class="filter-btn on">All</button>
+    <button class="filter-btn">Python</button>
+    <button class="filter-btn">DuckDB · SQL</button>
+    <button class="filter-btn">Kite Connect</button>
+    <button class="filter-btn">Research</button>
+  </div>
+
+  <div class="proj-grid">
+
+    <a href="project-kite-api.html" class="proj-card">
+      <div class="proj-card-top">
+        <div class="proj-num">01</div>
+        <div style="font-size:20px">🔌</div>
+      </div>
+      <div class="proj-tag-row">
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">pykiteconnect</span>
+        <span class="proj-tag">WebSocket</span>
+      </div>
+      <div class="proj-name">Kite Connect API Study Suite</div>
+      <div class="proj-desc">A comprehensive deep-dive into Zerodha's Kite Connect API — all 41 KiteConnect functions, KiteTicker WebSocket streaming, callback handlers, auto-reconnect logic, and order management. Documented as a structured PDF reference guide.</div>
+      <div class="proj-footer">
+        <span class="proj-view">View Project →</span>
+        <span class="proj-status">✓ Completed</span>
+      </div>
+    </a>
+
+    <a href="project-duckdb.html" class="proj-card">
+      <div class="proj-card-top">
+        <div class="proj-num">02</div>
+        <div style="font-size:20px">🦆</div>
+      </div>
+      <div class="proj-tag-row">
+        <span class="proj-tag">DuckDB</span>
+        <span class="proj-tag">SQL</span>
+        <span class="proj-tag">Data Analysis</span>
+      </div>
+      <div class="proj-name">Portfolio Analytics Engine</div>
+      <div class="proj-desc">High-performance analytical queries using DuckDB to filter, sort and analyse large datasets. Features live USD→INR currency conversion, stock category filtering, and in-stock analysis on million-row CSVs — all from the terminal.</div>
+      <div class="proj-footer">
+        <span class="proj-view">View Project →</span>
+        <span class="proj-status">✓ Completed</span>
+      </div>
+    </a>
+
+    <a href="project-csv-filter.html" class="proj-card">
+      <div class="proj-card-top">
+        <div class="proj-num">03</div>
+        <div style="font-size:20px">🗂️</div>
+      </div>
+      <div class="proj-tag-row">
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">CSV</span>
+        <span class="proj-tag">CLI Tool</span>
+      </div>
+      <div class="proj-name">Country Data Filter CLI</div>
+      <div class="proj-desc">An interactive terminal script using DuckDB that prompts for a country name and dynamically filters 100,000+ row customer datasets on the fly. No file changes needed — pure query-based filtering with instant results.</div>
+      <div class="proj-footer">
+        <span class="proj-view">View Project →</span>
+        <span class="proj-status">✓ Completed</span>
+      </div>
+    </a>
+
+    <a href="project-market-prep.html" class="proj-card">
+      <div class="proj-card-top">
+        <div class="proj-num">04</div>
+        <div style="font-size:20px">📈</div>
+      </div>
+      <div class="proj-tag-row">
+        <span class="proj-tag">Research</span>
+        <span class="proj-tag">Python</span>
+        <span class="proj-tag">PDF Generation</span>
+      </div>
+      <div class="proj-name">Zerodha Market Prep Hub</div>
+      <div class="proj-desc">Comprehensive study notes on Zerodha Kite &amp; Pi platforms, Indian stock market fundamentals, F&amp;O concepts, NSE/BSE structure, order types, and the Kite Connect API ecosystem — all generated into a formatted PDF guide.</div>
+      <div class="proj-footer">
+        <span class="proj-view">View Project →</span>
+        <span class="proj-status">✓ Completed</span>
+      </div>
+    </a>
+
+  </div>
+</div>
+
+<footer>
+  <div class="footer-name">SUSHM<span>ITHA</span></div>
+  <div class="footer-links">
+    <a href="mailto:dhjdhjsdh@gmail.com">dhjdhjsdh@gmail.com</a>
+    <a href="https://github.com/sHBDJS" target="_blank">github.com/sHBDJS</a>
+  </div>
+  <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
+</footer>
+
+<script>
+const btn=document.getElementById('themeBtn');
+btn.addEventListener('click',()=>{
+  const d=document.documentElement.getAttribute('data-theme')==='dark';
+  document.documentElement.setAttribute('data-theme',d?'light':'dark');
+  btn.textContent=d?'☾ Dark':'☀ Light';
+});
+</script>
+</body>
+</html>
