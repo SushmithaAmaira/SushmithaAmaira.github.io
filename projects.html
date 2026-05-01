@@ -3,275 +3,393 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1"/>
-<title>Projects — R Sushmitha</title>
+<title>R Sushmitha — Portfolio</title>
 <link rel="preconnect" href="https://fonts.googleapis.com"/>
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
 <style>
-:root{--bg:#FFFFFF;--bg2:#F8FFFE;--bg3:#F4F4F4;--text:#1A1A1A;--text2:#4A4A4A;--text3:#888;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.15);--teal-dark:#1E9E8A;--border:#E8E8E8;--card:#FFFFFF;--card-shadow:0 2px 12px rgba(0,0,0,0.06)}
-[data-theme="dark"]{--bg:#13120F;--bg2:#1B1916;--bg3:#1F1D19;--text:#F0EDE6;--text2:#B0A898;--text3:#666;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.12);--teal-dark:#25A090;--border:#2A2825;--card:#1F1D19;--card-shadow:0 2px 12px rgba(0,0,0,0.3)}
+:root{
+  --bg:#FFFFFF;--bg2:#F8FFFE;--bg3:#F4F4F4;
+  --text:#1A1A1A;--text2:#4A4A4A;--text3:#888;
+  --teal:#2DBFA8;--teal-light:rgba(45,191,168,0.15);--teal-dark:#1E9E8A;
+  --coral:#F07070;--yellow:#F5C842;--grey-sh:#AAAAAA;
+  --border:#E8E8E8;--card:#FFFFFF;--card-shadow:0 2px 12px rgba(0,0,0,0.06);
+  --nav-active:#1A1A1A;
+}
+[data-theme="dark"]{
+  --bg:#13120F;--bg2:#1B1916;--bg3:#1F1D19;
+  --text:#F0EDE6;--text2:#B0A898;--text3:#666;
+  --teal:#2DBFA8;--teal-light:rgba(45,191,168,0.12);--teal-dark:#25A090;
+  --border:#2A2825;--card:#1F1D19;--card-shadow:0 2px 12px rgba(0,0,0,0.3);
+  --nav-active:#F0EDE6;
+}
 *{box-sizing:border-box;margin:0;padding:0}
-body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;transition:background .3s,color .3s}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;transition:background .3s,color .3s;overflow-x:hidden}
 a{text-decoration:none;color:inherit}
+
+/* ── NAV ── */
 nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:60px;transition:background .3s}
-.logo{font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--text)}
-.logo span{color:var(--teal)}
+.logo{font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--teal)}
 .nav-right{display:flex;align-items:center;gap:2rem}
 .nav-links{display:flex;gap:1.6rem;list-style:none}
-.nav-links a{font-size:13px;font-weight:700;color:var(--text3);padding-bottom:2px;transition:color .2s}
-.nav-links a:hover,.nav-links a.active{color:var(--text)}
-.nav-links a.active{border-bottom:2.5px solid var(--teal)}
-.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text3);cursor:pointer;transition:all .2s}
+.nav-links a{font-size:17px;font-weight:700;color:var(--text3);padding-bottom:2px;transition:color .2s}
+.nav-links a:hover{color:var(--text)}
+.nav-links a.active{color:var(--text);border-bottom:2.5px solid var(--teal)}
+.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text3);cursor:pointer;transition:all .2s;letter-spacing:.5px}
 .theme-btn:hover{border-color:var(--teal);color:var(--teal)}
 
-.page-hero{padding:3.5rem 2.5rem 2rem;border-bottom:1px solid var(--border);position:relative;overflow:hidden}
-.page-hero .confetti{position:absolute;inset:0;pointer-events:none}
-.back-link{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);margin-bottom:1rem;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
-.back-link:hover{color:var(--teal)}
-.page-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem}
-.page-title{font-size:clamp(28px,4vw,42px);font-weight:900;color:var(--text);margin-bottom:0.8rem}
-.page-sub{font-size:15px;color:var(--text2);max-width:500px}
+/* ── CONFETTI ── */
+.confetti-layer{position:absolute;inset:0;pointer-events:none;overflow:hidden;z-index:0}
 
-.projects-body{padding:2.5rem}
-.filter-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:2rem}
-.filter-btn{font-family:'IBM Plex Mono',monospace;font-size:11px;padding:6px 16px;border-radius:20px;border:1.5px solid var(--border);background:transparent;color:var(--text3);cursor:pointer;transition:all .2s;letter-spacing:.5px}
-.filter-btn:hover,.filter-btn.on{border-color:var(--teal);color:var(--teal);background:var(--teal-light)}
+/* ── HERO ── */
+.hero-wrap{position:relative;overflow:hidden;background:var(--bg)}
+.hero{position:relative;z-index:2;padding:2rem 2.5rem 0;max-width:680px}
+.hero-wave{font-size:46px;display:block;margin-bottom:1rem;animation:wave .8s ease-in-out 0.3s both}
+@keyframes wave{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+.hero h1{font-size:clamp(32px,4vw,50px);font-weight:900;line-height:1.15;color:var(--text);margin-bottom:1.2rem;letter-spacing:-0.5px;animation:fadein .7s ease 0.5s both}
+@keyframes fadein{from{opacity:0;transform:translateY(20px)}to{opacity:1;transform:translateY(0)}}
+.hero-sub{font-size:15px;color:var(--text2);margin-bottom:1.6rem;animation:fadein .7s ease 0.7s both}
+.hero-sub a{font-weight:800;color:var(--text);text-decoration:underline;text-decoration-color:var(--teal);text-underline-offset:3px}
+.cta-row{display:flex;gap:12px;flex-wrap:wrap;animation:fadein .7s ease 0.9s both}
+.btn-teal{display:inline-block;background:var(--teal);color:#fff;font-size:14px;font-weight:700;padding:11px 24px;border-radius:8px;border:none;cursor:pointer;font-family:'Nunito',sans-serif;transition:background .2s,transform .15s}
+.btn-teal:hover{background:var(--teal-dark);transform:translateY(-1px)}
+.btn-outline{display:inline-block;background:transparent;color:var(--text);font-size:14px;font-weight:700;padding:11px 24px;border-radius:8px;border:1.5px solid var(--border);cursor:pointer;font-family:'Nunito',sans-serif;transition:border-color .2s,transform .15s}
+.btn-outline:hover{border-color:var(--teal);transform:translateY(-1px)}
 
-.proj-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
-.proj-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:1.6rem;box-shadow:var(--card-shadow);display:block;color:inherit;transition:border-color .2s,transform .15s,box-shadow .2s;position:relative;overflow:hidden}
-.proj-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--border);transition:background .2s}
-.proj-card:hover{border-color:var(--teal);transform:translateY(-3px);box-shadow:0 8px 24px rgba(45,191,168,.12)}
-.proj-card:hover::before{background:var(--teal)}
-.proj-card-top{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem}
-.proj-num{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--border);font-weight:600;transition:color .2s}
-.proj-card:hover .proj-num{color:var(--teal)}
-.proj-tag-row{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:0.8rem}
-.proj-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:3px 10px;border-radius:20px;letter-spacing:.5px}
-.proj-name{font-size:18px;font-weight:800;color:var(--text);margin-bottom:0.5rem;line-height:1.3}
-.proj-desc{font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:1.2rem}
-.proj-footer{display:flex;justify-content:space-between;align-items:center;border-top:1px solid var(--border);padding-top:0.8rem}
-.proj-view{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--teal);letter-spacing:.5px;display:flex;align-items:center;gap:5px}
-.proj-status{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3)}
+/* ── QUICK FACTS ── */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;padding:0 2.5rem 2.5rem;position:relative;z-index:2}
+.fact-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;box-shadow:var(--card-shadow);transition:border-color .2s}
+.fact-card:hover{border-color:var(--teal)}
+.fact-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.fact-val{font-size:14px;font-weight:700;color:var(--text)}
 
-footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+/* ── SECTIONS ── */
+.section{padding:3rem 2.5rem;border-top:1px solid var(--border)}
+.section-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem}
+.section-title{font-size:26px;font-weight:800;color:var(--text);margin-bottom:1.8rem}
+.section-row{display:grid;grid-template-columns:1fr 1fr;gap:2.5rem}
+
+/* ── ABOUT ── */
+.about-text{font-size:15px;color:var(--text2);line-height:1.85}
+.about-text p{margin-bottom:1rem}
+.about-text strong{color:var(--text);font-weight:800}
+
+/* ── TIMELINE ── */
+.timeline{display:flex;flex-direction:column;gap:1.2rem}
+.tl-item{border-left:3px solid var(--border);padding-left:1.2rem;position:relative;transition:border-color .2s}
+.tl-item:hover{border-left-color:var(--teal)}
+.tl-dot{width:10px;height:10px;border-radius:50%;background:var(--border);position:absolute;left:-6.5px;top:4px;transition:background .2s}
+.tl-item:hover .tl-dot{background:var(--teal)}
+.tl-date{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1px;margin-bottom:4px}
+.tl-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:2px}
+.tl-sub{font-size:13px;color:var(--text2)}
+.tl-tag{display:inline-block;font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:2px 8px;border-radius:4px;margin-top:5px}
+
+/* ── SKILLS ── */
+.skills-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.skill-block{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;box-shadow:var(--card-shadow)}
+.skill-block-head{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--teal);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.skill-chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-size:12px;font-weight:700;background:var(--bg3);color:var(--text2);padding:4px 12px;border-radius:20px;border:1px solid var(--border)}
+
+/* ── CAREER OBJECTIVE ── */
+.objective-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:1.5rem;font-size:15px;color:var(--text2);line-height:1.8;font-style:italic}
+.objective-box strong{color:var(--text);font-style:normal}
+
+/* ── PROJECTS PREVIEW ── */
+.proj-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1.5rem}
+.proj-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.4rem;box-shadow:var(--card-shadow);cursor:pointer;transition:border-color .2s,transform .15s;display:block;color:inherit;text-decoration:none}
+.proj-card:hover{border-color:var(--teal);transform:translateY(-2px)}
+.proj-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal-dark);letter-spacing:1px;text-transform:uppercase;margin-bottom:6px}
+.proj-name{font-size:15px;font-weight:800;color:var(--text);margin-bottom:4px}
+.proj-desc{font-size:12px;color:var(--text3);line-height:1.6}
+.proj-arrow{float:right;color:var(--border);margin-top:-36px;font-size:16px;transition:color .2s}
+.proj-card:hover .proj-arrow{color:var(--teal)}
+.view-all{display:inline-flex;align-items:center;gap:6px;font-size:14px;font-weight:800;color:var(--teal);text-decoration:underline;text-underline-offset:3px;transition:gap .2s}
+.view-all:hover{gap:10px}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}
 .footer-name{font-size:16px;font-weight:900;color:var(--text)}
 .footer-name span{color:var(--teal)}
 .footer-links{display:flex;gap:1.5rem}
-.footer-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);transition:color .2s}
+.footer-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);transition:color .2s;letter-spacing:.5px}
 .footer-links a:hover{color:var(--teal)}
-.footer-copy{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;width:100%;text-align:center}
-@media(max-width:640px){.proj-grid{grid-template-columns:1fr}nav,. projects-body{padding-left:1.2rem;padding-right:1.2rem}}
+.footer-copy{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;width:100%;text-align:center;margin-top:0.5rem}
+
+@media(max-width:640px){
+  .facts,.section-row,.skills-grid,.proj-grid{grid-template-columns:1fr}
+  nav{padding:0 1.2rem}
+  .hero,.section{padding-left:1.2rem;padding-right:1.2rem}
+  .facts{padding-left:1.2rem;padding-right:1.2rem}
+}
 </style>
 </head>
 <body>
 
+<!-- NAV -->
 <nav>
-  <a href="index.html" class="logo">SUSHM<span>ITHA</span></a>
+  <a href="index.html" class="logo">SUSHMITHA</a>
   <div class="nav-right">
     <ul class="nav-links">
-      <li><a href="index.html">Home</a></li>
-      <li><a href="index.html#about">About</a></li>
-      <li><a href="index.html#skills">Skills</a></li>
-      <li><a href="projects.html" class="active">Projects</a></li>
-      <li><a href="index.html#contact">Contact</a></li>
+      <li><a href="index.html" class="active">Home</a></li>
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="projects.html">Projects</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <button class="theme-btn" id="themeBtn">☾ Dark</button>
   </div>
 </nav>
 
-<div class="page-hero">
-  <div class="confetti">
-    <svg style="position:absolute;top:10%;right:8%;width:18px;opacity:.7;transform:rotate(15deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#F07070"/></svg>
-    <svg style="position:absolute;top:30%;right:20%;width:14px;opacity:.65" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#F5C842"/></svg>
-    <svg style="position:absolute;top:60%;right:12%;width:16px;opacity:.7;transform:rotate(180deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#2DBFA8"/></svg>
-    <svg style="position:absolute;top:15%;right:40%;width:10px;opacity:.5;transform:rotate(30deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#AAAAAA"/></svg>
+<!-- HERO -->
+<div class="hero-wrap">
+
+  <!-- Confetti shapes -->
+  <div class="confetti-layer">
+    <svg style="position:absolute;top:8%;left:14%;width:16px;opacity:.8" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#2DBFA8"/></svg>
+    <svg style="position:absolute;top:22%;left:60%;width:20px;opacity:.7;transform:rotate(180deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#2DBFA8"/></svg>
+    <svg style="position:absolute;top:55%;left:90%;width:13px;opacity:.7" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#2DBFA8"/></svg>
+    <svg style="position:absolute;top:75%;left:52%;width:9px;opacity:.6;transform:rotate(30deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#2DBFA8"/></svg>
+    <svg style="position:absolute;top:6%;left:78%;width:22px;opacity:.75;transform:rotate(12deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#F07070"/></svg>
+    <svg style="position:absolute;top:35%;left:84%;width:15px;opacity:.7;transform:rotate(180deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#F07070"/></svg>
+    <svg style="position:absolute;top:68%;left:28%;width:11px;opacity:.6;transform:rotate(20deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#F07070"/></svg>
+    <svg style="position:absolute;top:15%;left:90%;width:12px;opacity:.65" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#F5C842"/></svg>
+    <svg style="position:absolute;top:32%;left:80%;width:18px;opacity:.7" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#F5C842"/></svg>
+    <svg style="position:absolute;top:60%;left:75%;width:11px;opacity:.65" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#F5C842"/></svg>
+    <svg style="position:absolute;top:70%;left:10%;width:20px;opacity:.7" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2DBFA8"/></svg>
+    <svg style="position:absolute;top:18%;left:48%;width:9px;opacity:.6" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#2DBFA8"/></svg>
+    <svg style="position:absolute;top:45%;left:5%;width:11px;opacity:.5;transform:rotate(30deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#AAAAAA"/></svg>
+    <svg style="position:absolute;top:12%;left:36%;width:9px;opacity:.4;transform:rotate(45deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#BBBBBB"/></svg>
+    <svg style="position:absolute;top:82%;left:60%;width:8px;opacity:.4" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#CCCCCC"/></svg>
+    <svg style="position:absolute;top:88%;left:82%;width:13px;opacity:.5;transform:rotate(10deg)" viewBox="0 0 20 20"><polygon points="10,1 19,18 1,18" fill="#AAAAAA"/></svg>
+    <svg style="position:absolute;top:50%;left:42%;width:7px;opacity:.4" viewBox="0 0 20 20"><circle cx="10" cy="10" r="9" fill="#F07070"/></svg>
   </div>
-  <a href="index.html" class="back-link">← Back to Home</a>
-  <div class="page-label">Portfolio</div>
-  <h1 class="page-title">My Projects</h1>
-  <p class="page-sub">A collection of things I've built — exploring Kite Connect API, Python, SQL, DuckDB and Indian stock markets.</p>
+
+  <div class="hero">
+    <span class="hero-wave">👋</span>
+    <h1>Hello, I'm Sushmitha.</h1>
+  </div>
 </div>
 
-<div class="projects-body">
-  <div class="filter-row">
-    <button class="filter-btn on">All</button>
-    <button class="filter-btn">Python</button>
-    <button class="filter-btn">DuckDB · SQL</button>
-    <button class="filter-btn">Kite Connect</button>
-    <button class="filter-btn">Research</button>
+<!-- ABOUT -->
+<section id="about" class="section">
+  <div class="section-label">Who I am</div>
+  <div class="section-title">About Me</div>
+  <div class="section-row">
+    <div class="about-text">
+      <p>Hi! I'm <strong>R Sushmitha</strong> — a Computer Science graduate from <strong>Dayananda Sagar University</strong>, Bengaluru, with a passion for the Indian financial markets and data-driven problem solving.</p>
+      <p>I have a solid understanding of the <strong>Indian stock markets</strong> — including NSE, BSE, equity trading, F&amp;O concepts, Mutual Funds concepts and the <strong>Zerodha product ecosystem.</strong> I use AI tools such as <strong>Claude AI</strong> as my primary instrument to confidently build real, working applications. From exploring the <strong>Zerodha Kite Connect API</strong> to creating portfolio analytics tools using Python, Streamlit and DuckDB — I get things done through smart prompting, clear thinking, and vibe coding with Claude.</p>
+      <p>A little about me — morning yoga, home-cooked meals, family time, and occasional travel to reset and recharge. 🙂</p>
+      <p>My motto in life — <strong>"Discipline &amp; consistency take you further than motivation ever will."</strong></p>
+    </div>
+    <div>
+      <div class="objective-box">
+        <strong>Career Objective</strong><br/><br/>
+        I aspire to work in a role where my knowledge of the Indian stock markets, Zerodha's ecosystem and my hands-on experience building applications using Python, SQL, DuckDB and the Kite Connect API — completely through <strong>vibe coding with AI tools like Claude AI</strong> — create real, lasting value.
+        <br/><br/>
+        Zerodha is a place I have had the privilege of working at before, and <strong>returning is something I have genuinely been working towards.</strong> This time, I come with full commitment, stronger skills and a clear sense of purpose.
+      </div>
+    </div>
   </div>
+</section>
 
+<!-- EDUCATION & WORK -->
+<section class="section">
+  <div class="section-label">Background</div>
+  <div class="section-title">Education &amp; Experience</div>
+  <div class="section-row">
+
+    <div>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem">Education</p>
+      <div class="timeline">
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-date">2016 – 2020</div>
+          <div class="tl-title">🎓 Bachelor of Technology (Computer Science)</div>
+          <div class="tl-sub">Dayananda Sagar University, Bengaluru</div>
+          <span class="tl-tag">B.Tech · CSE</span>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">📚 11th &amp; 12th Standard</div>
+          <div class="tl-sub">Sri Chaitanya College, Bengaluru</div>
+          <span class="tl-tag">Higher Secondary</span>
+        </div>
+        <div class="tl-item">
+          <div class="tl-dot"></div>
+          <div class="tl-title">🏫 10th Standard (ICSE Board)</div>
+          <div class="tl-sub">Cambridge Public School, Bengaluru</div>
+          <span class="tl-tag">ICSE Board</span>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:1rem">Work Experience</p>
+      <div class="tl-item">
+        <div class="tl-dot"></div>
+        <div style="background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.2rem;box-shadow:var(--card-shadow)">
+          <div style="display:flex;align-items:center;gap:10px;margin-bottom:1rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border)">
+            <span style="font-size:22px">💼</span>
+            <div>
+              <div style="font-size:15px;font-weight:800;color:var(--text)">Zerodha Broking Ltd</div>
+              <div style="font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace">Bengaluru, India</div>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--border)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase">Duration</span>
+            <span style="font-size:13px;font-weight:700;color:var(--text)">June 2021 – October 2021</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--border)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase">Designation</span>
+            <span style="font-size:13px;font-weight:700;color:var(--text)">Assistant Manager — Level 1</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0;border-bottom:0.5px solid var(--border)">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase">Department</span>
+            <span style="font-size:13px;font-weight:700;color:var(--text);text-align:right;max-width:60%">Customer Support Specialist Team</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;padding:5px 0">
+            <span style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1px;text-transform:uppercase">Emp Code</span>
+            <span style="font-size:13px;font-weight:700;color:var(--text)">Z3303</span>
+          </div>
+          <span class="tl-tag">Zerodha · 2021</span>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section id="skills" class="section">
+  <div class="section-label">What I know</div>
+  <div class="section-title">Skills &amp; Tools</div>
+  <div class="skills-grid">
+    <div class="skill-block">
+      <div class="skill-block-head">Markets &amp; Finance</div>
+      <div class="skill-chips">
+        <span class="chip">Kite Connect API</span>
+        <span class="chip">pykiteconnect</span>
+        <span class="chip">NSE / BSE</span>
+        <span class="chip">F&amp;O Concepts</span>
+        <span class="chip">Zerodha Platform</span>
+        <span class="chip">KiteTicker WebSocket</span>
+        <span class="chip">Order Management</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-head">Programming &amp; Data</div>
+      <div class="skill-chips">
+        <span class="chip">Python</span>
+        <span class="chip">SQL</span>
+        <span class="chip">DuckDB</span>
+        <span class="chip">CSV / Data Pipelines</span>
+        <span class="chip">Pandas</span>
+        <span class="chip">Vibe Coding</span>
+        <span class="chip">GitHub</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-head">Tools &amp; Workflow</div>
+      <div class="skill-chips">
+        <span class="chip">VS Code</span>
+        <span class="chip">Terminal / CLI</span>
+        <span class="chip">Git</span>
+        <span class="chip">GitHub Pages</span>
+        <span class="chip">Rapid Prototyping</span>
+      </div>
+    </div>
+    <div class="skill-block">
+      <div class="skill-block-head">Soft Skills</div>
+      <div class="skill-chips">
+        <span class="chip">Customer Management</span>
+        <span class="chip">Team Leadership</span>
+        <span class="chip">Problem Solving</span>
+        <span class="chip">Communication</span>
+        <span class="chip">Documentation</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS PREVIEW -->
+<section class="section">
+  <div class="section-label">What I've built</div>
+  <div class="section-title">Recent Projects</div>
   <div class="proj-grid">
-
     <a href="project-mutual-fund.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">01</div>
-        <div style="font-size:20px">📊</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">Python</span>
-        <span class="proj-tag">Streamlit</span>
-        <span class="proj-tag">Kite Connect</span>
-        <span class="proj-tag">Plotly</span>
-      </div>
+      <div class="proj-tag">Python · Streamlit · Plotly</div>
       <div class="proj-name">Mutual Fund Analytics Dashboard</div>
-      <div class="proj-desc">Complete MF dashboard showing live portfolio value, NAV history, all transactions since inception and interactive Plotly charts — built using Kite Connect API, MFAPI and CAMS data.</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">Live MF portfolio dashboard with NAV history, all transactions and interactive charts using Kite Connect API.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
     <a href="project-order-management.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">02</div>
-        <div style="font-size:20px">🏦</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">Python</span>
-        <span class="proj-tag">Streamlit</span>
-        <span class="proj-tag">Kite Connect</span>
-        <span class="proj-tag">NSE / BSE</span>
-      </div>
+      <div class="proj-tag">Python · Streamlit · Kite API</div>
       <div class="proj-name">Order Management System</div>
-      <div class="proj-desc">Real trading interface to place actual buy/sell orders on NSE/BSE stocks via Zerodha Kite Connect API. Supports LIMIT/MARKET, CNC/MIS and AMO orders. Successfully placed a real order for IOB stock!</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">Real trading interface — place actual buy/sell orders on NSE/BSE via Zerodha Kite Connect API with AMO support.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
     <a href="project-paper-trading.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">03</div>
-        <div style="font-size:20px">📈</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">Python</span>
-        <span class="proj-tag">Streamlit</span>
-        <span class="proj-tag">SQLite</span>
-        <span class="proj-tag">Yahoo Finance</span>
-      </div>
+      <div class="proj-tag">Python · Streamlit · SQLite</div>
       <div class="proj-name">Paper Trading Simulator</div>
-      <div class="proj-desc">Full paper trading platform with ₹1,00,000 virtual capital — supports equity, futures and options trading with live NSE prices, permanent trade history and risk management tools.</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">Full paper trading platform with ₹1,00,000 virtual capital — equity, futures and options with live NSE prices.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
     <a href="project-kite-api.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">04</div>
-        <div style="font-size:20px">🔌</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">Python</span>
-        <span class="proj-tag">pykiteconnect</span>
-        <span class="proj-tag">WebSocket</span>
-      </div>
+      <div class="proj-tag">Python · pykiteconnect</div>
       <div class="proj-name">Kite Connect API Study Suite</div>
-      <div class="proj-desc">A comprehensive deep-dive into Zerodha's Kite Connect API — all 41 KiteConnect functions, KiteTicker WebSocket streaming, callback handlers, auto-reconnect logic, and order management. Documented as a structured PDF reference guide.</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">Deep dive into all 41 KiteConnect functions, KiteTicker WebSocket, callbacks and auto-reconnect logic.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
     <a href="project-duckdb.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">03</div>
-        <div style="font-size:20px">🦆</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">DuckDB</span>
-        <span class="proj-tag">SQL</span>
-        <span class="proj-tag">Data Analysis</span>
-      </div>
+      <div class="proj-tag">DuckDB · SQL</div>
       <div class="proj-name">Portfolio Analytics Engine</div>
-      <div class="proj-desc">High-performance analytical queries using DuckDB to filter, sort and analyse large datasets. Features live USD→INR currency conversion, stock category filtering, and in-stock analysis on million-row CSVs — all from the terminal.</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">High-performance DuckDB queries to filter and analyse large datasets with live USD→INR conversion.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
     <a href="project-csv-filter.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">03</div>
-        <div style="font-size:20px">🗂️</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">Python</span>
-        <span class="proj-tag">CSV</span>
-        <span class="proj-tag">CLI Tool</span>
-      </div>
+      <div class="proj-tag">Python · CSV</div>
       <div class="proj-name">Country Data Filter CLI</div>
-      <div class="proj-desc">An interactive terminal script using DuckDB that prompts for a country name and dynamically filters 100,000+ row customer datasets on the fly. No file changes needed — pure query-based filtering with instant results.</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">Interactive terminal tool using DuckDB that dynamically filters 100K+ row datasets by country.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
     <a href="project-market-prep.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">04</div>
-        <div style="font-size:20px">📈</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">Research</span>
-        <span class="proj-tag">Python</span>
-        <span class="proj-tag">PDF Generation</span>
-      </div>
+      <div class="proj-tag">Research · PDF</div>
       <div class="proj-name">Zerodha Market Prep Hub</div>
-      <div class="proj-desc">Comprehensive study notes on Zerodha Kite &amp; Pi platforms, Indian stock market fundamentals, F&amp;O concepts, NSE/BSE structure, order types, and the Kite Connect API ecosystem — all generated into a formatted PDF guide.</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">Comprehensive study notes on Zerodha Kite, Indian stock markets, F&amp;O structures and NSE/BSE.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
     <a href="project-sip-calculator.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">07</div>
-        <div style="font-size:20px">💰</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">Python</span>
-        <span class="proj-tag">Streamlit</span>
-        <span class="proj-tag">yfinance</span>
-        <span class="proj-tag">MFAPI</span>
-      </div>
+      <div class="proj-tag">Python · Streamlit · yfinance</div>
       <div class="proj-name">SIP Calculator & Planner</div>
-      <div class="proj-desc">Backtest any SIP in any NSE stock, index or Indian mutual fund from any past date. Shows real historical returns, XIRR and automatic Nifty 50 benchmark comparison with interactive Plotly charts.</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">Backtest any SIP in NSE stocks, indices or mutual funds with XIRR and Nifty 50 benchmark comparison.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
     <a href="project-market-scanner.html" class="proj-card">
-      <div class="proj-card-top">
-        <div class="proj-num">08</div>
-        <div style="font-size:20px">🔍</div>
-      </div>
-      <div class="proj-tag-row">
-        <span class="proj-tag">Python</span>
-        <span class="proj-tag">Streamlit</span>
-        <span class="proj-tag">yfinance</span>
-        <span class="proj-tag">Plotly</span>
-      </div>
+      <div class="proj-tag">Python · Streamlit · yfinance</div>
       <div class="proj-name">Hourly Market Scanner</div>
-      <div class="proj-desc">Auto-scans hourly OHLC data for a custom NSE watchlist every hour during market hours. Includes candlestick charts, 7-day historical view, watchlist management and background scheduler.</div>
-      <div class="proj-footer">
-        <span class="proj-view">View Project →</span>
-        <span class="proj-status">✓ Completed</span>
-      </div>
+      <div class="proj-desc">Auto-scans hourly OHLC for a custom NSE watchlist every hour during market hours with candlestick charts.</div>
+      <div class="proj-arrow">↗</div>
     </a>
-
   </div>
-</div>
+  <a href="projects.html" class="view-all">View all projects →</a>
+</section>
 
+<!-- CONTACT -->
+<section id="contact" class="section">
+  <div class="section-label">Get in touch</div>
+  <div class="section-title">Contact</div>
+  <div class="about-text" style="max-width:480px">
+    <p>I'm currently open to new opportunities. Feel free to reach out via email or connect with me on GitHub!</p>
+  </div>
+  <div style="display:flex;gap:12px;margin-top:1.5rem;flex-wrap:wrap">
+    <a href="mailto:dhjdhjsdh@gmail.com" class="btn-teal">✉ Email Me</a>
+    <a href="https://github.com/sHBDJS" target="_blank" class="btn-outline">⌥ GitHub</a>
+  </div>
+</section>
+
+<!-- FOOTER -->
 <footer>
   <div class="footer-name">SUSHM<span>ITHA</span></div>
   <div class="footer-links">
@@ -282,11 +400,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
 </footer>
 
 <script>
-const btn=document.getElementById('themeBtn');
-btn.addEventListener('click',()=>{
-  const d=document.documentElement.getAttribute('data-theme')==='dark';
-  document.documentElement.setAttribute('data-theme',d?'light':'dark');
-  btn.textContent=d?'☾ Dark':'☀ Light';
+const btn = document.getElementById('themeBtn');
+btn.addEventListener('click', () => {
+  const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+  document.documentElement.setAttribute('data-theme', isDark ? 'light' : 'dark');
+  btn.textContent = isDark ? '☾ Dark' : '☀ Light';
 });
 </script>
 </body>
