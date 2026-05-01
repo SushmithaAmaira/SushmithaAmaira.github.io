@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Mutual Fund Dashboard — R Sushmitha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#FFFFFF;--bg2:#F8FFFE;--bg3:#F4F4F4;--text:#1A1A1A;--text2:#4A4A4A;--text3:#888;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.15);--teal-dark:#1E9E8A;--border:#E8E8E8;--card:#FFFFFF;--code-bg:#F6F8FA;--card-shadow:0 2px 12px rgba(0,0,0,0.06)}
+[data-theme="dark"]{--bg:#13120F;--bg2:#1B1916;--bg3:#1F1D19;--text:#F0EDE6;--text2:#B0A898;--text3:#666;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.12);--teal-dark:#25A090;--border:#2A2825;--card:#1F1D19;--code-bg:#161410;--card-shadow:0 2px 12px rgba(0,0,0,0.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:60px;transition:background .3s}
+.logo{font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:17px;font-weight:700;color:var(--text3);padding-bottom:2px;transition:color .2s}
+.nav-links a:hover{color:var(--text)}.nav-links a.active{color:var(--text);border-bottom:2.5px solid var(--teal)}
+.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text3);cursor:pointer;transition:all .2s}
+.theme-btn:hover{border-color:var(--teal);color:var(--teal)}
+.proj-hero{padding:3rem 2.5rem 2rem;border-bottom:1px solid var(--border)}
+.back-link{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);margin-bottom:1.2rem;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.back-link:hover{color:var(--teal)}
+.proj-meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.meta-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:4px 12px;border-radius:20px;letter-spacing:.5px}
+.proj-hero-title{font-size:clamp(26px,4vw,40px);font-weight:900;color:var(--text);margin-bottom:0.8rem;line-height:1.2}
+.proj-hero-sub{font-size:15px;color:var(--text2);line-height:1.7;max-width:680px}
+.proj-body{max-width:860px;margin:0 auto;padding:2.5rem}
+.section-head{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem;margin-top:2.5rem}
+.section-head:first-of-type{margin-top:0}
+h2{font-size:20px;font-weight:800;color:var(--text);margin-bottom:1rem}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:1rem}
+ul{padding-left:1.2rem;margin-bottom:1rem}
+ul li{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:4px}
+ul li::marker{color:var(--teal)}
+
+/* info grid */
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;box-shadow:var(--card-shadow)}
+.info-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.info-val{font-size:14px;font-weight:700;color:var(--text)}
+
+/* metric cards */
+.metrics-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.metric-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;box-shadow:var(--card-shadow);text-align:center}
+.metric-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:6px}
+.metric-val{font-size:18px;font-weight:900;color:var(--text)}
+.metric-val.green{color:#16a34a}
+.metric-val.teal{color:var(--teal)}
+
+/* sections dashboard */
+.sections-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
+.section-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;box-shadow:var(--card-shadow)}
+.section-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:1px;margin-bottom:5px}
+.section-name{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.section-desc{font-size:12px;color:var(--text3);line-height:1.5}
+
+/* tech stack table */
+.tech-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:13px}
+.tech-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:2px solid var(--border);background:var(--bg3)}
+.tech-table td{padding:10px 12px;border-bottom:0.5px solid var(--border);color:var(--text2)}
+.tech-table td:first-child{font-weight:800;color:var(--teal);font-family:'IBM Plex Mono',monospace;font-size:12px}
+.tech-table tr:last-child td{border-bottom:none}
+
+/* transactions table */
+.tx-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:13px}
+.tx-table th{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;padding:8px 10px;text-align:left;border-bottom:2px solid var(--border);background:var(--bg3)}
+.tx-table td{padding:9px 10px;border-bottom:0.5px solid var(--border);color:var(--text2)}
+.tx-table tr:last-child td{border-bottom:none}
+.tx-buy{background:rgba(22,163,74,0.06)}
+.tx-sell{background:rgba(220,38,38,0.06)}
+.tx-buy td:nth-child(2){color:#16a34a;font-weight:800}
+.tx-sell td:nth-child(2){color:#dc2626;font-weight:800}
+
+/* steps */
+.step-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem}
+.step{display:flex;gap:1rem;align-items:flex-start}
+.step-num{min-width:32px;height:32px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0}
+.step-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.65}
+
+/* video */
+.video-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.5rem;box-shadow:var(--card-shadow)}
+.video-wrap video{width:100%;display:block}
+.video-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
+
+/* nav between projects */
+.nav-proj{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.nav-proj a{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);transition:color .2s;display:flex;align-items:center;gap:5px}
+.nav-proj a:hover{color:var(--teal)}
+
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.footer-name{font-size:16px;font-weight:900;color:var(--text)}.footer-name span{color:var(--teal)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;width:100%;text-align:center}
+@media(max-width:640px){.info-grid,.metrics-grid,.sections-grid{grid-template-columns:1fr 1fr}nav{padding:0 1.2rem}.proj-body{padding:1.5rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">SUSHMITHA</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<div class="proj-hero">
+  <a href="projects.html" class="back-link">← All Projects</a>
+  <div class="proj-meta-row">
+    <span class="meta-tag">Python</span>
+    <span class="meta-tag">Streamlit</span>
+    <span class="meta-tag">Kite Connect API</span>
+    <span class="meta-tag">Plotly</span>
+    <span class="meta-tag">Pandas</span>
+  </div>
+  <h1 class="proj-hero-title">📊 Mutual Fund Analytics Dashboard</h1>
+  <p class="proj-hero-sub">A complete mutual fund analytics dashboard showing my entire investment journey in the Zerodha Nifty LargeMidcap 250 Index Fund — with live data, NAV history, and every single transaction displayed beautifully using Streamlit.</p>
+</div>
+
+<div class="proj-body">
+
+  <!-- Overview -->
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">Framework</div><div class="info-val">Streamlit</div></div>
+    <div class="info-card"><div class="info-label">Data Sources</div><div class="info-val">Kite API + MFAPI + CAMS</div></div>
+    <div class="info-card"><div class="info-label">Charts</div><div class="info-val">Plotly (Interactive)</div></div>
+  </div>
+
+  <!-- What I Built -->
+  <div class="section-head">Overview</div>
+  <h2>What I Built</h2>
+  <p>A <strong>Streamlit web dashboard</strong> with 6 interactive sections that combines three different data sources — Zerodha's Kite Connect API for live holdings, MFAPI for full NAV history, and my CAMS statement for complete transaction history. Everything is tied together in Python and displayed with Plotly charts.</p>
+
+  <!-- Dashboard Sections -->
+  <div class="section-head">Dashboard</div>
+  <h2>6 Sections Inside the Dashboard</h2>
+  <div class="sections-grid">
+    <div class="section-card">
+      <div class="section-num">Section 01</div>
+      <div class="section-name">Live Portfolio Summary</div>
+      <div class="section-desc">9 metric cards showing total purchased, redeemed, net invested, current value, P&amp;L, units, NAV and transaction counts</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">Section 02</div>
+      <div class="section-name">Complete Transaction Table</div>
+      <div class="section-desc">Every transaction since inception — colour coded green for purchases and red for redemptions</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">Section 03</div>
+      <div class="section-name">Unit Balance Timeline Chart</div>
+      <div class="section-desc">Interactive line chart showing how units grew and fell over time with triangle markers on each transaction</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">Section 04</div>
+      <div class="section-name">Cumulative Investment Chart</div>
+      <div class="section-desc">Shows how much was invested vs redeemed over time on a single interactive chart</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">Section 05</div>
+      <div class="section-name">NAV History + Transactions</div>
+      <div class="section-desc">Full NAV chart from inception with buy/sell points marked directly on it — very impressive visually</div>
+    </div>
+    <div class="section-card">
+      <div class="section-num">Section 06</div>
+      <div class="section-name">Fund Information</div>
+      <div class="section-desc">All fund details — expense ratio, benchmark, inception date, risk level and more</div>
+    </div>
+  </div>
+
+  <!-- Tech Stack -->
+  <div class="section-head">Technology Stack</div>
+  <h2>Tools Used</h2>
+  <table class="tech-table">
+    <thead><tr><th>Tool</th><th>Purpose</th></tr></thead>
+    <tbody>
+      <tr><td>Kite Connect API</td><td>Live holdings, current NAV, current units</td></tr>
+      <tr><td>MFAPI (mfapi.in)</td><td>Free public API for full NAV history since fund inception</td></tr>
+      <tr><td>CAMS Statement</td><td>Complete transaction history since first purchase</td></tr>
+      <tr><td>Pandas</td><td>Data processing and calculations</td></tr>
+      <tr><td>Plotly</td><td>Interactive charts with transaction markers</td></tr>
+      <tr><td>Streamlit</td><td>Web dashboard framework</td></tr>
+      <tr><td>Python</td><td>Everything tied together</td></tr>
+    </tbody>
+  </table>
+
+  <!-- How I built it -->
+  <div class="section-head">Process</div>
+  <h2>How I Built It</h2>
+  <div class="step-list">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Discovered Kite Connect MF API</div><div class="step-desc">Found that kite.mf_holdings(), kite.mf_sips() and kite.mf_orders() are all free with Kite Connect Personal API.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Fetched live MF data</div><div class="step-desc">Ran Python commands to see actual live holdings — 6,155.721 units of Zerodha Nifty LargeMidcap 250.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Discovered the 7-day limit</div><div class="step-desc">Found that mf_orders() only gives the last 7 days — not full history. Needed another solution.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Found MFAPI solution</div><div class="step-desc">Discovered mfapi.in — a completely free public API that gives full NAV history since fund inception (Nov 2023). No authentication needed.</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Got CAMS Statement</div><div class="step-desc">Went to camsonline.com → MF Investors → CAS-CAMS+KFintech → Downloaded detailed statement → Got complete transaction history.</div></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Built the dashboard</div><div class="step-desc">Combined all 3 data sources into one Streamlit app with 6 sections — live data, transaction history, and 4 interactive Plotly charts.</div></div></div>
+    <div class="step"><div class="step-num">7</div><div class="step-content"><div class="step-title">Fixed compatibility & ran it</div><div class="step-desc">Fixed pandas 3.0 compatibility issue (applymap → map), then ran streamlit run app.py — full dashboard live in browser with real data!</div></div></div>
+  </div>
+
+  <!-- Screen Recording -->
+  <div class="section-head">Output Demo</div>
+  <h2>Screen Recording</h2>
+  <div class="video-label">Live dashboard running in browser</div>
+  <div class="video-wrap">
+    <video controls>
+      <source src="Mutual_Fund_portfolio_recording.mp4" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
+  </div>
+
+  <!-- What I learned -->
+  <div class="section-head">Takeaways</div>
+  <h2>What I Learned</h2>
+  <ul>
+    <li>How to combine 3 different data sources — Kite Connect, MFAPI, and CAMS — into one unified dashboard</li>
+    <li>MFAPI gives free historical NAV data for all Indian mutual funds — no authentication needed</li>
+    <li>Using @st.cache_data with different TTLs for different data types (5 min for live data, 1 hour for NAV history)</li>
+    <li>Overlaying transaction markers directly on a NAV history chart using Plotly</li>
+    <li>Real financial concepts — NAV, units, redemption, CAMS, ISIN</li>
+    <li>Pandas cumulative calculations for running balances and investment totals</li>
+  </ul>
+
+  <div class="nav-proj">
+    <a href="projects.html">← All Projects</a>
+    <a href="project-kite-api.html">Next: Kite Connect API Suite →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-name">SUSHM<span>ITHA</span></div>
+  <div class="footer-links">
+    <a href="mailto:dhjdhjsdh@gmail.com">dhjdhjsdh@gmail.com</a>
+    <a href="https://github.com/SushmithaAmaira" target="_blank">github.com/SushmithaAmaira</a>
+  </div>
+  <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
+</footer>
+
+<script>
+const btn=document.getElementById('themeBtn');
+btn.addEventListener('click',()=>{const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');btn.textContent=d?'☾ Dark':'☀ Light';});
+</script>
+</body>
+</html>
