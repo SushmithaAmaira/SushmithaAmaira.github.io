@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>SIP Calculator & Planner — R Sushmitha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#FFFFFF;--bg2:#F8FFFE;--bg3:#F4F4F4;--text:#1A1A1A;--text2:#4A4A4A;--text3:#888;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.15);--teal-dark:#1E9E8A;--border:#E8E8E8;--card:#FFFFFF;--code-bg:#F6F8FA;--card-shadow:0 2px 12px rgba(0,0,0,0.06)}
+[data-theme="dark"]{--bg:#13120F;--bg2:#1B1916;--bg3:#1F1D19;--text:#F0EDE6;--text2:#B0A898;--text3:#666;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.12);--teal-dark:#25A090;--border:#2A2825;--card:#1F1D19;--code-bg:#161410;--card-shadow:0 2px 12px rgba(0,0,0,0.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:60px;transition:background .3s}
+.logo{font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:17px;font-weight:700;color:var(--text3);padding-bottom:2px;transition:color .2s}
+.nav-links a:hover{color:var(--text)}.nav-links a.active{color:var(--text);border-bottom:2.5px solid var(--teal)}
+.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text3);cursor:pointer;transition:all .2s}
+.theme-btn:hover{border-color:var(--teal);color:var(--teal)}
+.proj-hero{padding:3rem 2.5rem 2rem;border-bottom:1px solid var(--border)}
+.back-link{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);margin-bottom:1.2rem;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.back-link:hover{color:var(--teal)}
+.proj-meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.meta-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:4px 12px;border-radius:20px;letter-spacing:.5px}
+.proj-hero-title{font-size:clamp(26px,4vw,40px);font-weight:900;color:var(--text);margin-bottom:0.8rem;line-height:1.2}
+.proj-hero-sub{font-size:15px;color:var(--text2);line-height:1.7;max-width:680px}
+.proj-body{max-width:860px;margin:0 auto;padding:2.5rem}
+.section-head{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem;margin-top:2.5rem}
+.section-head:first-of-type{margin-top:0}
+h2{font-size:20px;font-weight:800;color:var(--text);margin-bottom:1rem}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:1rem}
+ul{padding-left:1.2rem;margin-bottom:1rem}
+ul li{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:4px}
+ul li::marker{color:var(--teal)}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;box-shadow:var(--card-shadow)}
+.info-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.info-val{font-size:14px;font-weight:700;color:var(--text)}
+.features-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:1.5rem}
+.feature-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:0.9rem 1.1rem;box-shadow:var(--card-shadow);display:flex;align-items:flex-start;gap:10px}
+.feature-icon{font-size:18px;flex-shrink:0}
+.feature-text{font-size:13px;color:var(--text2);line-height:1.5}
+.feature-text strong{color:var(--text)}
+.tech-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:13px}
+.tech-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:2px solid var(--border);background:var(--bg3)}
+.tech-table td{padding:10px 12px;border-bottom:0.5px solid var(--border);color:var(--text2)}
+.tech-table td:first-child{font-weight:800;color:var(--teal);font-family:'IBM Plex Mono',monospace;font-size:12px}
+.tech-table tr:last-child td{border-bottom:none}
+.data-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:13px}
+.data-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:2px solid var(--border);background:var(--bg3)}
+.data-table td{padding:9px 12px;border-bottom:0.5px solid var(--border);color:var(--text2)}
+.data-table tr:last-child td{border-bottom:none}
+.free-badge{display:inline-block;background:rgba(22,163,74,0.1);color:#16a34a;font-family:'IBM Plex Mono',monospace;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:700}
+.step-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem}
+.step{display:flex;gap:1rem;align-items:flex-start}
+.step-num{min-width:32px;height:32px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0}
+.step-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.65}
+.file-structure{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:1.5rem;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text2);line-height:1.9}
+.file-structure .folder{color:var(--teal);font-weight:600}
+.file-structure .comment{color:var(--text3)}
+.video-placeholder{background:var(--bg3);border:2px dashed var(--border);border-radius:12px;padding:3rem;text-align:center;margin-bottom:1.5rem}
+.video-icon{font-size:40px;margin-bottom:0.8rem}
+.video-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:0.4rem}
+.video-sub{font-size:13px;color:var(--text3)}
+.nav-proj{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.nav-proj a{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);transition:color .2s}
+.nav-proj a:hover{color:var(--teal)}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.footer-name{font-size:16px;font-weight:900;color:var(--text)}.footer-name span{color:var(--teal)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;width:100%;text-align:center}
+@media(max-width:640px){.info-grid,.features-grid{grid-template-columns:1fr}nav{padding:0 1.2rem}.proj-body{padding:1.5rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">SUSHMITHA</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<div class="proj-hero">
+  <a href="projects.html" class="back-link">← All Projects</a>
+  <div class="proj-meta-row">
+    <span class="meta-tag">Python</span>
+    <span class="meta-tag">Streamlit</span>
+    <span class="meta-tag">yfinance</span>
+    <span class="meta-tag">MFAPI</span>
+    <span class="meta-tag">Kite Connect</span>
+    <span class="meta-tag">Plotly</span>
+  </div>
+  <h1 class="proj-hero-title">💰 SIP Calculator & Planner</h1>
+  <p class="proj-hero-sub">A Streamlit web app that simulates what would have happened if you had started a SIP in any NSE stock, index, or Indian mutual fund from any past date — showing real historical returns, XIRR and automatic comparison against the Nifty 50 benchmark.</p>
+</div>
+
+<div class="proj-body">
+
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">Coverage</div><div class="info-val">Stocks · Indices · MFs</div></div>
+    <div class="info-card"><div class="info-label">Data</div><div class="info-val">yfinance + MFAPI</div></div>
+    <div class="info-card"><div class="info-label">Returns Calc</div><div class="info-val">XIRR (annualised)</div></div>
+  </div>
+
+  <div class="section-head">Overview</div>
+  <h2>What I Built</h2>
+  <p>A <strong>SIP backtest simulator</strong> for any NSE stock, index or Indian mutual fund. Enter any stock symbol or fund name, set a monthly SIP amount and start date, and the app calculates exactly what your investment would be worth today — with <strong>XIRR</strong>, a Nifty 50 benchmark comparison, month-wise breakdown table, and interactive Plotly charts.</p>
+  <p>The app uses a smart <strong>hybrid architecture</strong> — yfinance for all historical stock/index data, MFAPI for mutual fund NAV history, and Kite Connect optionally for live prices and your actual Zerodha MF holdings.</p>
+
+  <div class="section-head">Key Features</div>
+  <h2>What the App Can Do</h2>
+  <div class="features-grid">
+    <div class="feature-card"><div class="feature-icon">📈</div><div class="feature-text"><strong>Any NSE stock or index</strong> — RELIANCE, TCS, NIFTY, BANKNIFTY and more from 2000 onwards</div></div>
+    <div class="feature-card"><div class="feature-icon">🏦</div><div class="feature-text"><strong>Any Indian mutual fund</strong> — search by keyword like "Zerodha Nifty" or "Parag Parikh"</div></div>
+    <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-text"><strong>XIRR calculation</strong> — true annualised return using actual monthly cash flows</div></div>
+    <div class="feature-card"><div class="feature-icon">⚖️</div><div class="feature-text"><strong>Nifty 50 benchmark</strong> — automatic comparison so you know if your pick beat the index</div></div>
+    <div class="feature-card"><div class="feature-icon">📉</div><div class="feature-text"><strong>Interactive Plotly chart</strong> — portfolio vs Nifty vs invested amount on one chart</div></div>
+    <div class="feature-card"><div class="feature-icon">📋</div><div class="feature-text"><strong>Month-wise SIP table</strong> — every monthly investment with units, NAV and running total</div></div>
+    <div class="feature-card"><div class="feature-icon">💾</div><div class="feature-text"><strong>CSV export</strong> — download the full SIP breakdown as a spreadsheet</div></div>
+    <div class="feature-card"><div class="feature-icon">🔓</div><div class="feature-text"><strong>Kite login optional</strong> — app works for everyone without Zerodha login via yfinance + MFAPI</div></div>
+  </div>
+
+  <div class="section-head">Architecture</div>
+  <h2>Smart Hybrid Data Sources</h2>
+  <table class="data-table">
+    <thead><tr><th>Data Type</th><th>Source</th><th>Free?</th><th>Login Needed?</th></tr></thead>
+    <tbody>
+      <tr><td>Stock historical prices</td><td>yfinance (Yahoo Finance)</td><td><span class="free-badge">✓ Free</span></td><td>No</td></tr>
+      <tr><td>Index historical prices</td><td>yfinance</td><td><span class="free-badge">✓ Free</span></td><td>No</td></tr>
+      <tr><td>MF historical NAV</td><td>MFAPI → AMFI (official)</td><td><span class="free-badge">✓ Free</span></td><td>No</td></tr>
+      <tr><td>Stock/Index live price</td><td>Kite Connect LTP (fallback: yfinance)</td><td><span class="free-badge">✓ Free</span></td><td>Optional</td></tr>
+      <tr><td>Your Zerodha MF holdings</td><td>Kite mf_holdings()</td><td><span class="free-badge">✓ Free</span></td><td>Yes</td></tr>
+      <tr><td>Your active SIPs</td><td>Kite mf_sips()</td><td><span class="free-badge">✓ Free</span></td><td>Yes</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-head">Technology Stack</div>
+  <h2>Tools Used</h2>
+  <table class="tech-table">
+    <thead><tr><th>Tool</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>Streamlit</td><td>Web UI framework</td></tr>
+      <tr><td>yfinance</td><td>Free historical stock and index data</td></tr>
+      <tr><td>MFAPI</td><td>Free historical mutual fund NAV data</td></tr>
+      <tr><td>Kite Connect</td><td>Live prices, MF holdings and active SIPs</td></tr>
+      <tr><td>pyxirr</td><td>XIRR annualised return calculation</td></tr>
+      <tr><td>Plotly</td><td>Interactive portfolio vs benchmark chart</td></tr>
+      <tr><td>Pandas</td><td>Data processing and SIP simulation engine</td></tr>
+      <tr><td>Python</td><td>Everything tied together</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-head">File Structure</div>
+  <h2>Project Files</h2>
+  <div class="file-structure">
+    <span class="folder">sip_calculator/</span><br/>
+    ├── <span class="folder">app.py</span>          <span class="comment">← Streamlit UI (two tabs: Stocks & MF)</span><br/>
+    ├── <span class="folder">auth.py</span>         <span class="comment">← Kite Connect OAuth login handler</span><br/>
+    ├── <span class="folder">sip_engine.py</span>   <span class="comment">← SIP simulation engine for stocks & indices</span><br/>
+    ├── <span class="folder">mf_data.py</span>      <span class="comment">← Mutual fund data layer (MFAPI + Kite MF API)</span><br/>
+    └── <span class="folder">requirements.txt</span><span class="comment">← All dependencies</span>
+  </div>
+
+  <div class="section-head">Process</div>
+  <h2>How I Built It</h2>
+  <div class="step-list">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Decided what to build</div><div class="step-desc">SIP backtest simulator showing total invested, current value, XIRR and Nifty 50 comparison — using only free data sources.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Discovered Kite Connect limitations</div><div class="step-desc">Kite Connect's historical data endpoint requires a paid plan (₹2,000/month) and daily OAuth re-login — not suitable as the primary data source.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Switched to yfinance</div><div class="step-desc">yfinance is 100% free, needs no API key, and has data going back to the 1990s for all NSE stocks (.NS), BSE stocks (.BO) and indices (^NSEI for Nifty 50).</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Built hybrid architecture</div><div class="step-desc">yfinance handles all historical data, Kite Connect provides live real-time price if the user is logged in, with graceful fallback to yfinance's last close if not.</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Added Mutual Funds support</div><div class="step-desc">Built a new hybrid for mutual funds — MFAPI for full historical NAV data (sourced from AMFI, the official regulator) and Kite MF API for current NAV and user's actual holdings.</div></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Fixed bugs and theme issues</div><div class="step-desc">Fixed yf.fast_info reliability issues for Indian stocks, expanded symbol map with 15+ index aliases, and fixed CSS dark theme override by replacing hardcoded colours with Streamlit CSS variables.</div></div></div>
+  </div>
+
+  <div class="section-head">Takeaways</div>
+  <h2>What I Learned</h2>
+  <ul>
+    <li><strong>XIRR</strong> — the correct way to measure investment returns when cash flows happen at irregular intervals (like monthly SIPs)</li>
+    <li><strong>Hybrid API architecture</strong> — combining multiple free data sources with graceful fallbacks when optional paid sources are unavailable</li>
+    <li><strong>MFAPI + AMFI</strong> — India's official mutual fund NAV data is publicly available for free via AMFI, accessible through MFAPI</li>
+    <li><strong>yfinance for Indian markets</strong> — NSE stocks need .NS suffix, BSE need .BO, and indices use ^ prefix (^NSEI for Nifty 50)</li>
+    <li><strong>Benchmark comparison</strong> — always compare investment returns against an index to know if the stock actually added value</li>
+    <li><strong>Streamlit CSS variables</strong> — use var(--background-color) instead of hardcoded hex values for proper light/dark theme support</li>
+  </ul>
+
+  <div class="section-head">Output Demo</div>
+  <h2>Screen Recording</h2>
+  <div class="video-placeholder">
+    <div class="video-icon">🎥</div>
+    <div class="video-title">Screen Recording Coming Soon</div>
+    <div class="video-sub">Upload your screen recording to showcase the SIP simulator in action.</div>
+  </div>
+
+  <div class="nav-proj">
+    <a href="project-paper-trading.html">← Paper Trading Simulator</a>
+    <a href="project-market-scanner.html">Next: Hourly Market Scanner →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-name">SUSHM<span>ITHA</span></div>
+  <div class="footer-links">
+    <a href="mailto:dhjdhjsdh@gmail.com">dhjdhjsdh@gmail.com</a>
+    <a href="https://github.com/SushmithaAmaira" target="_blank">github.com/SushmithaAmaira</a>
+  </div>
+  <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
+</footer>
+<script>
+const btn=document.getElementById('themeBtn');
+btn.addEventListener('click',()=>{const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');btn.textContent=d?'☾ Dark':'☀ Light';});
+</script>
+</body>
+</html>

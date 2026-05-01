@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>Hourly Market Scanner — R Sushmitha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#FFFFFF;--bg2:#F8FFFE;--bg3:#F4F4F4;--text:#1A1A1A;--text2:#4A4A4A;--text3:#888;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.15);--teal-dark:#1E9E8A;--border:#E8E8E8;--card:#FFFFFF;--code-bg:#F6F8FA;--card-shadow:0 2px 12px rgba(0,0,0,0.06)}
+[data-theme="dark"]{--bg:#13120F;--bg2:#1B1916;--bg3:#1F1D19;--text:#F0EDE6;--text2:#B0A898;--text3:#666;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.12);--teal-dark:#25A090;--border:#2A2825;--card:#1F1D19;--code-bg:#161410;--card-shadow:0 2px 12px rgba(0,0,0,0.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:60px;transition:background .3s}
+.logo{font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:17px;font-weight:700;color:var(--text3);padding-bottom:2px;transition:color .2s}
+.nav-links a:hover{color:var(--text)}.nav-links a.active{color:var(--text);border-bottom:2.5px solid var(--teal)}
+.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text3);cursor:pointer;transition:all .2s}
+.theme-btn:hover{border-color:var(--teal);color:var(--teal)}
+.proj-hero{padding:3rem 2.5rem 2rem;border-bottom:1px solid var(--border)}
+.back-link{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);margin-bottom:1.2rem;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.back-link:hover{color:var(--teal)}
+.proj-meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.meta-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:4px 12px;border-radius:20px;letter-spacing:.5px}
+.proj-hero-title{font-size:clamp(26px,4vw,40px);font-weight:900;color:var(--text);margin-bottom:0.8rem;line-height:1.2}
+.proj-hero-sub{font-size:15px;color:var(--text2);line-height:1.7;max-width:680px}
+.proj-body{max-width:860px;margin:0 auto;padding:2.5rem}
+.section-head{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem;margin-top:2.5rem}
+.section-head:first-of-type{margin-top:0}
+h2{font-size:20px;font-weight:800;color:var(--text);margin-bottom:1rem}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:1rem}
+ul{padding-left:1.2rem;margin-bottom:1rem}
+ul li{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:4px}
+ul li::marker{color:var(--teal)}
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;box-shadow:var(--card-shadow)}
+.info-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.info-val{font-size:14px;font-weight:700;color:var(--text)}
+.tabs-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem}
+.tab-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem 1.2rem;box-shadow:var(--card-shadow)}
+.tab-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:1px;margin-bottom:5px}
+.tab-name{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.tab-desc{font-size:12px;color:var(--text3);line-height:1.5}
+.tech-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:13px}
+.tech-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:2px solid var(--border);background:var(--bg3)}
+.tech-table td{padding:10px 12px;border-bottom:0.5px solid var(--border);color:var(--text2)}
+.tech-table td:first-child{font-weight:800;color:var(--teal);font-family:'IBM Plex Mono',monospace;font-size:12px}
+.tech-table tr:last-child td{border-bottom:none}
+.kite-table{width:100%;border-collapse:collapse;margin-bottom:1.5rem;font-size:13px}
+.kite-table th{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;padding:8px 12px;text-align:left;border-bottom:2px solid var(--border);background:var(--bg3)}
+.kite-table td{padding:9px 12px;border-bottom:0.5px solid var(--border);color:var(--text2)}
+.kite-table td:first-child{font-weight:800;color:var(--teal);font-family:'IBM Plex Mono',monospace;font-size:12px}
+.kite-table tr:last-child td{border-bottom:none}
+.step-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem}
+.step{display:flex;gap:1rem;align-items:flex-start}
+.step-num{min-width:32px;height:32px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0}
+.step-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.65}
+.file-structure{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:1.5rem;font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--text2);line-height:1.9}
+.file-structure .folder{color:var(--teal);font-weight:600}
+.file-structure .comment{color:var(--text3)}
+.run-box{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;padding:1.2rem 1.5rem;margin-bottom:1.5rem}
+.run-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:10px}
+.run-cmd{font-family:'IBM Plex Mono',monospace;font-size:13px;color:var(--teal);padding:6px 0;border-bottom:0.5px solid var(--border)}
+.run-cmd:last-child{border-bottom:none}
+.run-note{font-size:12px;color:var(--text3);margin-top:4px}
+.video-placeholder{background:var(--bg3);border:2px dashed var(--border);border-radius:12px;padding:3rem;text-align:center;margin-bottom:1.5rem}
+.video-icon{font-size:40px;margin-bottom:0.8rem}
+.video-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:0.4rem}
+.video-sub{font-size:13px;color:var(--text3)}
+.nav-proj{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.nav-proj a{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);transition:color .2s}
+.nav-proj a:hover{color:var(--teal)}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.footer-name{font-size:16px;font-weight:900;color:var(--text)}.footer-name span{color:var(--teal)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;width:100%;text-align:center}
+@media(max-width:640px){.info-grid,.tabs-grid{grid-template-columns:1fr}nav{padding:0 1.2rem}.proj-body{padding:1.5rem}}
+</style>
+</head>
+<body>
+<nav>
+  <a href="index.html" class="logo">SUSHMITHA</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<div class="proj-hero">
+  <a href="projects.html" class="back-link">← All Projects</a>
+  <div class="proj-meta-row">
+    <span class="meta-tag">Python</span>
+    <span class="meta-tag">Streamlit</span>
+    <span class="meta-tag">yfinance</span>
+    <span class="meta-tag">Kite Connect</span>
+    <span class="meta-tag">Plotly</span>
+    <span class="meta-tag">SQLite</span>
+  </div>
+  <h1 class="proj-hero-title">🔍 Hourly Market Scanner</h1>
+  <p class="proj-hero-sub">A Streamlit web app that scans hourly OHLC (Open, High, Low, Close) data for a custom watchlist of NSE stocks. Auto-runs every hour during market hours, shows historical hourly data for any day in the past week, and supports full watchlist management.</p>
+</div>
+
+<div class="proj-body">
+
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">Data Interval</div><div class="info-val">1 Hour OHLC</div></div>
+    <div class="info-card"><div class="info-label">Auto Scan</div><div class="info-val">09:15 – 15:30 IST</div></div>
+    <div class="info-card"><div class="info-label">History</div><div class="info-val">7 days lookback</div></div>
+  </div>
+
+  <div class="section-head">Overview</div>
+  <h2>What I Built</h2>
+  <p>A <strong>background hourly market scanner</strong> that automatically fetches OHLC data for a custom watchlist of NSE stocks every hour during market hours. The Streamlit dashboard has 4 tabs — live OHLC view, historical candlestick charts, watchlist management, and a scan schedule log.</p>
+  <p>The scanner runs as a <strong>background daemon thread</strong> using the schedule library, meaning it continues scanning even while you navigate between tabs. All scan logs are saved to JSON for reference.</p>
+
+  <div class="section-head">Dashboard</div>
+  <h2>4 Tabs Inside the App</h2>
+  <div class="tabs-grid">
+    <div class="tab-card">
+      <div class="tab-num">Tab 01</div>
+      <div class="tab-name">📊 Live OHLC</div>
+      <div class="tab-desc">Hourly OHLC table for all watchlist stocks — visual range bar showing where close sits between the day's high and low</div>
+    </div>
+    <div class="tab-card">
+      <div class="tab-num">Tab 02</div>
+      <div class="tab-name">📉 Historical</div>
+      <div class="tab-desc">Interactive candlestick chart and OHLC table for any stock on any day in the past week — hour by hour</div>
+    </div>
+    <div class="tab-card">
+      <div class="tab-num">Tab 03</div>
+      <div class="tab-name">📋 Watchlist</div>
+      <div class="tab-desc">Add single stocks, bulk add multiple, edit, delete. Auto-import your Zerodha holdings directly into the watchlist with one click</div>
+    </div>
+    <div class="tab-card">
+      <div class="tab-num">Tab 04</div>
+      <div class="tab-name">🕐 Scan Schedule</div>
+      <div class="tab-desc">Today's full scan timeline, recent scan log, and a manual trigger button to run a scan immediately on demand</div>
+    </div>
+  </div>
+
+  <div class="section-head">Kite Connect APIs Used</div>
+  <h2>Free Tier APIs Only</h2>
+  <table class="kite-table">
+    <thead><tr><th>API</th><th>Used For</th></tr></thead>
+    <tbody>
+      <tr><td>kite.generate_session()</td><td>OAuth login — exchange request_token for access_token</td></tr>
+      <tr><td>kite.profile()</td><td>Show logged-in user name in sidebar</td></tr>
+      <tr><td>kite.holdings()</td><td>Auto-import your Zerodha stocks into the watchlist</td></tr>
+      <tr><td>kite.instruments("NSE")</td><td>Validate stock symbols and auto-fill company names</td></tr>
+    </tbody>
+  </table>
+  <p style="font-size:13px;color:var(--text3)">Note: ltp() and historical data are NOT used — those require paid plan. All price data comes from yfinance which is completely free.</p>
+
+  <div class="section-head">Technology Stack</div>
+  <h2>Tools Used</h2>
+  <table class="tech-table">
+    <thead><tr><th>Tool</th><th>Role</th></tr></thead>
+    <tbody>
+      <tr><td>Streamlit</td><td>Web UI framework with 4 tabs</td></tr>
+      <tr><td>yfinance</td><td>Free hourly OHLC data for NSE stocks</td></tr>
+      <tr><td>Kite Connect</td><td>Profile, holdings import, symbol validation</td></tr>
+      <tr><td>schedule</td><td>Background hourly job runner</td></tr>
+      <tr><td>Plotly</td><td>Interactive candlestick chart in Historical tab</td></tr>
+      <tr><td>Pandas</td><td>Data processing and table display</td></tr>
+      <tr><td>pytz</td><td>IST timezone conversion</td></tr>
+      <tr><td>JSON</td><td>Local storage for watchlist and scan log</td></tr>
+    </tbody>
+  </table>
+
+  <div class="section-head">File Structure</div>
+  <h2>Project Files</h2>
+  <div class="file-structure">
+    <span class="folder">hourly_scanner/</span><br/>
+    ├── <span class="folder">app.py</span>          <span class="comment">← Streamlit UI — 4 tabs</span><br/>
+    ├── <span class="folder">auth.py</span>         <span class="comment">← Kite Connect OAuth login</span><br/>
+    ├── <span class="folder">scanner.py</span>      <span class="comment">← yfinance OHLC data fetcher (1h interval)</span><br/>
+    ├── <span class="folder">scheduler.py</span>    <span class="comment">← Background hourly auto-scan (schedule library)</span><br/>
+    ├── <span class="folder">watchlist.py</span>    <span class="comment">← Watchlist CRUD (saved to watchlist.json)</span><br/>
+    └── <span class="folder">requirements.txt</span><span class="comment">← All dependencies</span>
+  </div>
+
+  <div class="section-head">Process</div>
+  <h2>How I Built It</h2>
+  <div class="step-list">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Decided what to build</div><div class="step-desc">Hourly OHLC scanner with auto-refresh, 7-day history, and full watchlist management — using only free data sources.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Chose data sources</div><div class="step-desc">yfinance for free 1h interval OHLC data (up to 7 days), Kite Connect free tier for profile, holdings and symbol validation, and the schedule library for background hourly jobs.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Built 5 core files</div><div class="step-desc">auth.py for Kite OAuth, watchlist.py for JSON-based CRUD, scanner.py for yfinance with IST timezone conversion, scheduler.py for background daemon thread, and app.py for the full Streamlit UI.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Fixed st.stop() bug</div><div class="step-desc">st.stop() inside the Live OHLC tab was stopping ALL tabs from rendering when the watchlist was empty. Fixed by removing st.stop() and using an info message instead.</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Fixed widget key clash</div><div class="step-desc">Widget key "hist_sym" clashed with session state key "hist_sym" — Streamlit doesn't allow this. Fixed by renaming widget keys to wgt_hist_sym and storing results under hist_result_sym.</div></div></div>
+  </div>
+
+  <div class="section-head">How to Run</div>
+  <h2>Running the App</h2>
+  <div class="run-box">
+    <div class="run-label">Commands</div>
+    <div class="run-cmd">pip install -r requirements.txt<div class="run-note">First time only</div></div>
+    <div class="run-cmd">python -m streamlit run app.py<div class="run-note">Run the full dashboard every time</div></div>
+    <div class="run-cmd">python scheduler.py<div class="run-note">Standalone scanner — runs in background without UI</div></div>
+  </div>
+
+  <div class="section-head">Takeaways</div>
+  <h2>What I Learned</h2>
+  <ul>
+    <li><strong>Background threads in Streamlit</strong> — using Python's threading module to run hourly scans while the UI stays responsive</li>
+    <li><strong>OHLC data</strong> — understanding Open, High, Low, Close and what each tells you about price action within a time period</li>
+    <li><strong>yfinance intervals</strong> — 1h interval data is available for the last 7 days for all NSE stocks</li>
+    <li><strong>IST timezone handling</strong> — NSE market data comes in UTC, must convert to IST for correct display</li>
+    <li><strong>Streamlit session state</strong> — widget keys and session state keys cannot overlap — fixed by using separate naming conventions</li>
+    <li><strong>JSON as a lightweight database</strong> — perfect for simple watchlists and scan logs without needing SQLite or a full database</li>
+  </ul>
+
+  <div class="section-head">Output Demo</div>
+  <h2>Screen Recording</h2>
+  <div class="video-placeholder">
+    <div class="video-icon">🎥</div>
+    <div class="video-title">Screen Recording Coming Soon</div>
+    <div class="video-sub">Upload your screen recording to showcase the hourly market scanner in action.</div>
+  </div>
+
+  <div class="nav-proj">
+    <a href="project-sip-calculator.html">← SIP Calculator</a>
+    <a href="projects.html">All Projects →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-name">SUSHM<span>ITHA</span></div>
+  <div class="footer-links">
+    <a href="mailto:dhjdhjsdh@gmail.com">dhjdhjsdh@gmail.com</a>
+    <a href="https://github.com/SushmithaAmaira" target="_blank">github.com/SushmithaAmaira</a>
+  </div>
+  <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
+</footer>
+<script>
+const btn=document.getElementById('themeBtn');
+btn.addEventListener('click',()=>{const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');btn.textContent=d?'☾ Dark':'☀ Light';});
+</script>
+</body>
+</html>
