@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<title>DuckDB SQL Explorer — R Sushmitha</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{--bg:#FFFFFF;--bg2:#F8FFFE;--bg3:#F4F4F4;--text:#1A1A1A;--text2:#4A4A4A;--text3:#888;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.15);--teal-dark:#1E9E8A;--border:#E8E8E8;--card:#FFFFFF;--code-bg:#F6F8FA;--card-shadow:0 2px 12px rgba(0,0,0,0.06)}
+[data-theme="dark"]{--bg:#13120F;--bg2:#1B1916;--bg3:#1F1D19;--text:#F0EDE6;--text2:#B0A898;--text3:#666;--teal:#2DBFA8;--teal-light:rgba(45,191,168,0.12);--teal-dark:#25A090;--border:#2A2825;--card:#1F1D19;--code-bg:#161410;--card-shadow:0 2px 12px rgba(0,0,0,0.3)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Nunito',sans-serif;transition:background .3s,color .3s}
+a{text-decoration:none;color:inherit}
+nav{position:sticky;top:0;z-index:100;background:var(--bg);border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;padding:0 2.5rem;height:60px;transition:background .3s}
+.logo{font-size:19px;font-weight:900;letter-spacing:-0.5px;color:var(--teal)}
+.nav-right{display:flex;align-items:center;gap:2rem}
+.nav-links{display:flex;gap:1.6rem;list-style:none}
+.nav-links a{font-size:17px;font-weight:700;color:var(--text3);padding-bottom:2px;transition:color .2s}
+.nav-links a:hover{color:var(--text)}.nav-links a.active{color:var(--text);border-bottom:2.5px solid var(--teal)}
+.theme-btn{background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 14px;font-size:12px;font-family:'IBM Plex Mono',monospace;color:var(--text3);cursor:pointer;transition:all .2s}
+.theme-btn:hover{border-color:var(--teal);color:var(--teal)}
+.proj-hero{padding:3rem 2.5rem 2rem;border-bottom:1px solid var(--border)}
+.back-link{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);margin-bottom:1.2rem;display:inline-flex;align-items:center;gap:6px;transition:color .2s}
+.back-link:hover{color:var(--teal)}
+.proj-meta-row{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem}
+.meta-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:4px 12px;border-radius:20px;letter-spacing:.5px}
+.proj-hero-title{font-size:clamp(26px,4vw,40px);font-weight:900;color:var(--text);margin-bottom:0.8rem;line-height:1.2}
+.proj-hero-sub{font-size:15px;color:var(--text2);line-height:1.7;max-width:680px}
+.proj-body{max-width:860px;margin:0 auto;padding:2.5rem}
+.section-head{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:3px;text-transform:uppercase;margin-bottom:0.5rem;margin-top:2.5rem}
+.section-head:first-of-type{margin-top:0}
+h2{font-size:20px;font-weight:800;color:var(--text);margin-bottom:1rem}
+p{font-size:15px;color:var(--text2);line-height:1.8;margin-bottom:1rem}
+ul{padding-left:1.2rem;margin-bottom:1rem}
+ul li{font-size:14px;color:var(--text2);line-height:1.8;margin-bottom:4px}
+ul li::marker{color:var(--teal)}
+
+.info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.info-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1rem;box-shadow:var(--card-shadow)}
+.info-label{font-family:'IBM Plex Mono',monospace;font-size:9px;color:var(--text3);letter-spacing:2px;text-transform:uppercase;margin-bottom:5px}
+.info-val{font-size:14px;font-weight:700;color:var(--text)}
+
+.experiment-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-bottom:1.5rem}
+.exp-card{background:var(--card);border:1px solid var(--border);border-radius:10px;padding:1.3rem;box-shadow:var(--card-shadow);border-left:4px solid var(--teal)}
+.exp-num{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:1.5px;margin-bottom:6px}
+.exp-title{font-size:15px;font-weight:800;color:var(--text);margin-bottom:6px}
+.exp-desc{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:8px}
+.exp-tags{display:flex;flex-wrap:wrap;gap:5px}
+.exp-tag{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--bg3);color:var(--text3);padding:2px 8px;border-radius:4px;border:1px solid var(--border)}
+
+.code-block{background:var(--code-bg);border:1px solid var(--border);border-radius:10px;overflow:hidden;margin-bottom:1.2rem}
+.code-header{display:flex;justify-content:space-between;align-items:center;padding:8px 14px;border-bottom:1px solid var(--border)}
+.code-filename{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3)}
+.code-lang{font-family:'IBM Plex Mono',monospace;font-size:10px;background:var(--teal-light);color:var(--teal-dark);padding:2px 8px;border-radius:4px}
+pre{padding:1rem 1.4rem;overflow-x:auto;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.7;color:var(--text)}
+.c-kw{color:#D73A49}.c-fn{color:#2DBFA8}.c-str{color:#22863A}.c-cm{color:#999}.c-num{color:#E36209}
+
+.terminal-demo{background:#1A1A1A;border-radius:10px;overflow:hidden;margin-bottom:1.2rem}
+.terminal-bar{background:#2A2A2A;padding:10px 16px;display:flex;gap:8px;align-items:center}
+.t-dot{width:12px;height:12px;border-radius:50%}
+.terminal-body{padding:1rem 1.4rem;font-family:'IBM Plex Mono',monospace;font-size:13px;line-height:1.8}
+.t-prompt{color:#2DBFA8}.t-output{color:#888}.t-highlight{color:#F5C842}
+
+.step-list{display:flex;flex-direction:column;gap:1rem;margin-bottom:1.5rem}
+.step{display:flex;gap:1rem;align-items:flex-start}
+.step-num{min-width:32px;height:32px;background:var(--teal);color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:600;flex-shrink:0}
+.step-title{font-size:14px;font-weight:800;color:var(--text);margin-bottom:3px}
+.step-desc{font-size:13px;color:var(--text2);line-height:1.65}
+
+.vibe-box{background:var(--teal-light);border-left:4px solid var(--teal);border-radius:0 10px 10px 0;padding:1.2rem 1.4rem;margin-bottom:1.5rem}
+.vibe-box p{font-size:14px;color:var(--text2);margin:0;line-height:1.7}
+.vibe-box strong{color:var(--text)}
+
+.video-placeholder{background:var(--bg3);border:2px dashed var(--border);border-radius:12px;padding:3rem;text-align:center;margin-bottom:1.5rem}
+.video-icon{font-size:40px;margin-bottom:0.8rem}
+.video-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:0.4rem}
+.video-sub{font-size:13px;color:var(--text3)}
+
+.nav-proj{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
+.nav-proj a{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);transition:color .2s}
+.nav-proj a:hover{color:var(--teal)}
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;margin-top:2rem}
+.footer-name{font-size:16px;font-weight:900;color:var(--text)}.footer-name span{color:var(--teal)}
+.footer-links{display:flex;gap:1.5rem}
+.footer-links a{font-family:'IBM Plex Mono',monospace;font-size:11px;color:var(--text3);transition:color .2s}
+.footer-links a:hover{color:var(--teal)}
+.footer-copy{font-size:11px;color:var(--text3);font-family:'IBM Plex Mono',monospace;width:100%;text-align:center}
+@media(max-width:640px){.info-grid,.experiment-grid{grid-template-columns:1fr}nav{padding:0 1.2rem}.proj-body{padding:1.5rem}}
+</style>
+</head>
+<body>
+
+<nav>
+  <a href="index.html" class="logo">SUSHMITHA</a>
+  <div class="nav-right">
+    <ul class="nav-links">
+      <li><a href="index.html">Home</a></li>
+      <li><a href="index.html#about">About</a></li>
+      <li><a href="index.html#skills">Skills</a></li>
+      <li><a href="projects.html" class="active">Projects</a></li>
+      <li><a href="index.html#contact">Contact</a></li>
+    </ul>
+    <button class="theme-btn" id="themeBtn">☾ Dark</button>
+  </div>
+</nav>
+
+<div class="proj-hero">
+  <a href="projects.html" class="back-link">← All Projects</a>
+  <div class="proj-meta-row">
+    <span class="meta-tag">DuckDB</span>
+    <span class="meta-tag">SQL</span>
+    <span class="meta-tag">Python</span>
+    <span class="meta-tag">CSV</span>
+    <span class="meta-tag">Vibe Coding</span>
+  </div>
+  <h1 class="proj-hero-title">🦆 DuckDB SQL Explorer</h1>
+  <p class="proj-hero-sub">A hands-on learning journey into DuckDB — querying large CSV datasets of 1,00,000 and 10,00,000+ rows directly with SQL, filtering, exporting and analysing data at high speed. All built through vibe coding with Claude AI.</p>
+</div>
+
+<div class="proj-body">
+
+  <div class="info-grid">
+    <div class="info-card"><div class="info-label">Tool</div><div class="info-val">DuckDB + Python</div></div>
+    <div class="info-card"><div class="info-label">Dataset Sizes</div><div class="info-val">1L and 10L+ rows</div></div>
+    <div class="info-card"><div class="info-label">Approach</div><div class="info-val">Vibe coding with Claude</div></div>
+  </div>
+
+  <!-- What this is -->
+  <div class="section-head">Overview</div>
+  <h2>What I Did</h2>
+  <p>This project is my <strong>getting started journey with DuckDB</strong> — a powerful in-process SQL analytics engine that can query CSV files directly without loading them into memory. I downloaded real sample datasets with 1,00,000 and 10,00,000+ rows and used <strong>vibe coding with Claude AI</strong> to write SQL queries, filter data, convert currencies and export results — all from the terminal.</p>
+  <p>What surprised me most was how <strong>fast DuckDB is</strong> — querying a 10 lakh row CSV file takes under a second. No database setup, no server, just Python and SQL.</p>
+
+  <!-- Vibe coding callout -->
+  <div class="vibe-box">
+    <p>💬 <strong>How I built this:</strong> I described what I wanted to do in plain English to Claude AI — "filter this CSV for only Skincare products that are in stock and convert the price to INR" — and Claude helped me write the exact DuckDB SQL query. This is vibe coding — using AI as your coding partner to get real work done without needing to memorise syntax.</p>
+  </div>
+
+  <!-- Experiments -->
+  <div class="section-head">Experiments</div>
+  <h2>What I Explored</h2>
+  <div class="experiment-grid">
+
+    <div class="exp-card">
+      <div class="exp-num">Experiment 01</div>
+      <div class="exp-title">Country-wise Customer Filter</div>
+      <div class="exp-desc">Downloaded a 1,00,000 row customer dataset. Built an interactive terminal script that asks for a country name and instantly filters all matching customers using DuckDB SQL — no file modification needed.</div>
+      <div class="exp-tags">
+        <span class="exp-tag">1,00,000 rows</span>
+        <span class="exp-tag">Python</span>
+        <span class="exp-tag">DuckDB</span>
+        <span class="exp-tag">while loop</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-num">Experiment 02</div>
+      <div class="exp-title">Product Analytics with Currency Conversion</div>
+      <div class="exp-desc">Used a 10,00,000+ row product dataset. Filtered by Category = Skincare AND Availability = in_stock, then converted all prices from USD to INR using the live exchange rate (₹93.09). Exported results to a new CSV.</div>
+      <div class="exp-tags">
+        <span class="exp-tag">10,00,000+ rows</span>
+        <span class="exp-tag">SQL filter</span>
+        <span class="exp-tag">USD → INR</span>
+        <span class="exp-tag">CSV export</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-num">Experiment 03</div>
+      <div class="exp-title">Direct CSV Querying</div>
+      <div class="exp-desc">Discovered DuckDB's most powerful feature — querying CSV files directly with SQL without importing them first. Just reference the file path inside the FROM clause and DuckDB handles the rest instantly.</div>
+      <div class="exp-tags">
+        <span class="exp-tag">Direct file query</span>
+        <span class="exp-tag">No import needed</span>
+        <span class="exp-tag">Instant results</span>
+      </div>
+    </div>
+
+    <div class="exp-card">
+      <div class="exp-num">Experiment 04</div>
+      <div class="exp-title">SQL Data Export with COPY TO</div>
+      <div class="exp-desc">Learned how to export filtered results directly to a new CSV file using DuckDB's COPY ... TO statement — a one-liner that replaces what would take multiple steps in pandas or Excel.</div>
+      <div class="exp-tags">
+        <span class="exp-tag">COPY TO</span>
+        <span class="exp-tag">CSV export</span>
+        <span class="exp-tag">HEADER</span>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- How I built it -->
+  <div class="section-head">Process</div>
+  <h2>How I Learned It Step by Step</h2>
+  <div class="step-list">
+    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Installed DuckDB</div><div class="step-desc">Installed DuckDB with a single pip command — no server setup, no configuration. It works as a Python library directly in your script.</div></div></div>
+    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Downloaded sample CSV datasets</div><div class="step-desc">Downloaded a customers CSV with 1,00,000 rows and a products CSV with 10,00,000+ rows from public dataset sources to experiment with.</div></div></div>
+    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Queried CSV files directly</div><div class="step-desc">Discovered I could write SELECT * FROM 'file.csv' WHERE ... and DuckDB would query it instantly without any import step — this was the biggest surprise.</div></div></div>
+    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Built interactive country filter</div><div class="step-desc">Used Python's input() to prompt for a country name and inject it into a DuckDB SQL query dynamically — turned a static query into an interactive CLI tool.</div></div></div>
+    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Added currency conversion</div><div class="step-desc">Applied ROUND(Price * 93.09) inside the SQL SELECT statement to convert all USD prices to INR in a single query — no extra processing needed.</div></div></div>
+    <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Exported filtered data to CSV</div><div class="step-desc">Used COPY (...query...) TO 'output.csv' (HEADER, DELIMITER ',') to export only the filtered rows to a new clean file.</div></div></div>
+  </div>
+
+  <!-- Code Snippets -->
+  <div class="section-head">Code</div>
+  <h2>Key SQL Queries</h2>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-filename">country_filter.py — Interactive CLI tool</span><span class="code-lang">Python</span></div>
+    <pre><span class="c-kw">import</span> duckdb
+
+FILE = <span class="c-str">r"C:\Users\nithi\Downloads\customers-100000.csv"</span>
+
+<span class="c-fn">print</span>(<span class="c-str">"=== Customer Data Filter === (type 'exit' to quit)"</span>)
+
+<span class="c-kw">while</span> <span class="c-kw">True</span>:
+    country = <span class="c-fn">input</span>(<span class="c-str">"Enter country name: "</span>).<span class="c-fn">strip</span>()
+    <span class="c-kw">if</span> country.lower() == <span class="c-str">'exit'</span>: <span class="c-kw">break</span>
+
+    result = duckdb.<span class="c-fn">query</span>(<span class="c-str">f"""
+        SELECT * FROM '{FILE}'
+        WHERE Country = '{country}'
+    """</span>).<span class="c-fn">df</span>()
+
+    <span class="c-fn">print</span>(<span class="c-str">f"Found {len(result)} records for '{country}'"</span>)
+    <span class="c-fn">print</span>(result.<span class="c-fn">to_string</span>(index=<span class="c-kw">False</span>))</pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-filename">analytics_query.sql — Filter + currency conversion</span><span class="code-lang">SQL</span></div>
+    <pre><span class="c-cm">-- Filter Skincare products in stock, convert USD → INR</span>
+<span class="c-kw">SELECT</span>
+    Index, Name, Brand, Category,
+    <span class="c-fn">ROUND</span>(Price * <span class="c-num">93.09</span>) <span class="c-kw">AS</span> Price,
+    <span class="c-str">'INR'</span>               <span class="c-kw">AS</span> Currency,
+    Availability
+<span class="c-kw">FROM</span> <span class="c-str">'products-1000000.csv'</span>
+<span class="c-kw">WHERE</span> Category     = <span class="c-str">'Skincare'</span>
+  <span class="c-kw">AND</span> Availability = <span class="c-str">'in_stock'</span>;</pre>
+  </div>
+
+  <div class="code-block">
+    <div class="code-header"><span class="code-filename">export.sql — Export results to new CSV</span><span class="code-lang">SQL</span></div>
+    <pre><span class="c-cm">-- Export filtered results directly to a new CSV file</span>
+<span class="c-kw">COPY</span> (
+    <span class="c-kw">SELECT</span>
+        Index, Name, Brand, Category,
+        <span class="c-fn">ROUND</span>(Price * <span class="c-num">93.09</span>) <span class="c-kw">AS</span> Price,
+        <span class="c-str">'INR'</span> <span class="c-kw">AS</span> Currency,
+        Availability
+    <span class="c-kw">FROM</span> <span class="c-str">'products-1000000.csv'</span>
+    <span class="c-kw">WHERE</span> Category = <span class="c-str">'Skincare'</span>
+      <span class="c-kw">AND</span> Availability = <span class="c-str">'in_stock'</span>
+) <span class="c-kw">TO</span> <span class="c-str">'Skincare_InStock_INR.csv'</span> (HEADER, DELIMITER <span class="c-str">','</span>);</pre>
+  </div>
+
+  <!-- Terminal preview -->
+  <p style="font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px">Terminal Output Preview</p>
+  <div class="terminal-demo">
+    <div class="terminal-bar">
+      <div class="t-dot" style="background:#FF5F57"></div>
+      <div class="t-dot" style="background:#FEBC2E"></div>
+      <div class="t-dot" style="background:#28C840"></div>
+    </div>
+    <div class="terminal-body">
+      <div><span class="t-output">=== Customer Data Filter === (type 'exit' to quit)</span></div>
+      <div><span class="t-prompt">Enter country name: </span><span style="color:#F0EDE6">Ireland</span></div>
+      <div><span class="t-highlight">Found 312 records for 'Ireland'</span></div>
+      <div><span class="t-output">  Customer Id   First Name   Last Name   Country   ...</span></div>
+      <div><span class="t-output">  000001        Liam         Murphy      Ireland   ...</span></div>
+      <div>&nbsp;</div>
+      <div><span class="t-prompt">Enter country name: </span><span style="color:#F0EDE6">Switzerland</span></div>
+      <div><span class="t-highlight">Found 287 records for 'Switzerland'</span></div>
+      <div><span class="t-output">  Customer Id   First Name   Last Name   Country        ...</span></div>
+      <div><span class="t-output">  000002        Hans         Müller      Switzerland    ...</span></div>
+      <div>&nbsp;</div>
+      <div><span class="t-prompt">Enter country name: </span><span style="color:#F0EDE6">exit</span></div>
+      <div><span class="t-output">Goodbye!</span></div>
+    </div>
+  </div>
+
+  <!-- Takeaways -->
+  <div class="section-head">Takeaways</div>
+  <h2>What I Learned</h2>
+  <ul>
+    <li><strong>DuckDB queries CSV files directly</strong> — no import, no database setup, just reference the file path in FROM and it works instantly</li>
+    <li><strong>Speed at scale</strong> — querying 10,00,000+ rows takes under a second on a regular laptop — far faster than pandas for large files</li>
+    <li><strong>ROUND() for currency</strong> — eliminates floating-point precision issues when multiplying prices by exchange rates</li>
+    <li><strong>COPY TO for exports</strong> — a one-liner to export any SQL query result directly to a CSV file</li>
+    <li><strong>Dynamic SQL with Python</strong> — using Python's input() + f-strings to build interactive, user-driven SQL queries</li>
+    <li><strong>Vibe coding with Claude</strong> — describing what I want in plain English and getting working SQL back — this is how I get things done efficiently</li>
+  </ul>
+
+  <div class="section-head">Output Demo</div>
+  <h2>Screen Recording</h2>
+  <div class="video-placeholder">
+    <div class="video-icon">🎥</div>
+    <div class="video-title">Screen Recording Coming Soon</div>
+    <div class="video-sub">Upload your screen recording to showcase the DuckDB queries running in the terminal.</div>
+  </div>
+
+  <div class="nav-proj">
+    <a href="project-portfolio-holdings.html">← Portfolio Holdings Analyzer</a>
+    <a href="projects.html">All Projects →</a>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-name">SUSHM<span>ITHA</span></div>
+  <div class="footer-links">
+    <a href="mailto:dhjdhjsdh@gmail.com">dhjdhjsdh@gmail.com</a>
+    <a href="https://github.com/SushmithaAmaira" target="_blank">github.com/SushmithaAmaira</a>
+  </div>
+  <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
+</footer>
+<script>
+const btn=document.getElementById('themeBtn');
+btn.addEventListener('click',()=>{const d=document.documentElement.getAttribute('data-theme')==='dark';document.documentElement.setAttribute('data-theme',d?'light':'dark');btn.textContent=d?'☾ Dark':'☀ Light';});
+</script>
+</body>
+</html>
