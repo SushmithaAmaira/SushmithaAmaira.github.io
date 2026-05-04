@@ -112,67 +112,20 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     <span class="meta-tag">Streamlit</span>
     <span class="meta-tag">SQLite</span>
     <span class="meta-tag">Yahoo Finance</span>
-    <span class="meta-tag">Kite Connect</span>
+    <span class="meta-tag" style="background:var(--teal);color:#fff;font-weight:700">Kite Connect API</span>
     <span class="meta-tag">Plotly</span>
   </div>
-  <h1 class="proj-hero-title">📈 Paper Trading Simulator</h1>
+  <h1 class="proj-hero-title">Paper Trading Simulator</h1>
   <p class="proj-hero-sub">A complete paper trading platform to practise trading stocks, futures and options with virtual money (₹1,00,000) — without risking a single rupee of real money. Uses real live market prices so every simulated trade reflects actual market conditions.</p>
 </div>
 
+
 <div class="proj-body">
 
-  <!-- Overview -->
   <div class="info-grid">
     <div class="info-card"><div class="info-label">Virtual Capital</div><div class="info-val">₹1,00,000</div></div>
     <div class="info-card"><div class="info-label">Segments</div><div class="info-val">Equity · Futures · Options</div></div>
     <div class="info-card"><div class="info-label">Database</div><div class="info-val">SQLite + SQLAlchemy</div></div>
-  </div>
-
-  <!-- What I Built -->
-  <div class="section-head">Overview</div>
-  <h2>What I Built</h2>
-  <p>A <strong>full-featured paper trading simulator</strong> built with Streamlit that supports equity, futures, and options trading with virtual money. It integrates <strong>Yahoo Finance</strong> for live NSE prices, <strong>SQLite with SQLAlchemy</strong> for permanent trade history, and <strong>Zerodha Kite Connect</strong> for authentication and instrument reference.</p>
-  <p>Unlike most beginner projects that only support simple buy/sell, this simulator supports <strong>all order types</strong> (LIMIT, MARKET, SL, SL-M), all product types (CNC, MIS, NRML), short selling, futures with margin calculation, and options with CE/PE — making it a truly comprehensive trading platform.</p>
-
-  <!-- Dashboard Sections -->
-  <div class="section-head">Dashboard</div>
-  <h2>7 Sections Inside the Dashboard</h2>
-  <div class="sections-grid">
-    <div class="section-card">
-      <div class="section-num">Section 01</div>
-      <div class="section-name">💼 Virtual Portfolio Summary</div>
-      <div class="section-desc">9 live metric cards — starting capital, available cash, positions value, total portfolio value, overall P&amp;L, open positions count, total trades, long and short positions</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 02</div>
-      <div class="section-name">📡 Live Market Prices</div>
-      <div class="section-desc">Two tabs with live prices refreshed every 5 minutes — Equity tab (15 stocks including RELIANCE, TCS, OLAELEC) and Indices tab (NIFTY, BANKNIFTY, FINNIFTY)</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 03</div>
-      <div class="section-name">🛒 Place Paper Trade</div>
-      <div class="section-desc">3 tabs — Equity (BUY/SELL/SHORT), Futures (LONG/SHORT with auto margin), Options (BUY/WRITE CE/PE). All with stop loss, target and live price auto-fill</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 04</div>
-      <div class="section-name">📊 Open Positions</div>
-      <div class="section-desc">Full table of all open positions with live P&amp;L, direction (LONG/SHORT), stop loss and target columns. Close any position fully or partially</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 05</div>
-      <div class="section-name">📋 Trade History</div>
-      <div class="section-desc">Every paper trade ever placed — stored permanently in SQLite. Filter by segment. Colour coded — BUY green, SELL red, SHORT purple</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 06</div>
-      <div class="section-name">📈 Trading Statistics</div>
-      <div class="section-desc">Trade count by segment, total traded value, and a pie chart showing trade distribution across Equity, Futures and Options</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 07</div>
-      <div class="section-name">🔄 Reset Portfolio</div>
-      <div class="section-desc">One button to wipe everything and start fresh with ₹1,00,000 — useful for practising different strategies</div>
-    </div>
   </div>
 
   <!-- Tech Stack -->
@@ -192,74 +145,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     </tbody>
   </table>
 
-  <!-- File Structure -->
-  <div class="section-head">File Structure</div>
-  <h2>Project Files</h2>
-  <div class="file-structure">
-    <span class="folder">project5_paper_trading/</span><br/>
-    ├── <span class="folder">app.py</span>         <span class="comment">← Main Streamlit dashboard (all UI)</span><br/>
-    ├── <span class="folder">database.py</span>    <span class="comment">← SQLite database — stores trades & positions</span><br/>
-    ├── <span class="folder">price_fetcher.py</span><span class="comment">← Fetches live prices from Yahoo Finance</span><br/>
-    ├── <span class="folder">config.py</span>      <span class="comment">← API credentials & settings</span><br/>
-    └── <span class="folder">paper_trading.db</span><span class="comment">← Auto-created SQLite database file</span>
-  </div>
-
-  <!-- Steps -->
-  <div class="section-head">Process</div>
-  <h2>How I Built It</h2>
-  <div class="step-list">
-    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Built basic version first</div><div class="step-desc">Started with a simple equity-only paper trading system with BUY/SELL, live prices and trade history stored in SQLite.</div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Installed required libraries</div><div class="step-desc">Installed yfinance for live prices and SQLAlchemy for clean database interactions.</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Upgraded to full version</div><div class="step-desc">Added short selling, futures, options, stop loss, target price, all order types and the close position feature.</div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Fixed database structure</div><div class="step-desc">Old database had different table structure after upgrades — deleted it and let the app auto-create a fresh one with correct tables.</div></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Full platform running! 🎉</div><div class="step-desc">Complete paper trading platform working with all 3 segments — Equity, Futures and Options — with live prices and permanent trade history.</div></div></div>
-  </div>
-
-  <!-- What Makes It Stand Out -->
-  <div class="section-head">Highlights</div>
-  <h2>What Makes This Project Stand Out</h2>
-  <div class="standout-grid">
-    <div class="standout-card">
-      <div class="standout-title">3 Trading Segments</div>
-      <div class="standout-desc">Equity, Futures and Options — shows deep understanding of the full Indian market structure</div>
-    </div>
-    <div class="standout-card">
-      <div class="standout-title">Short Selling</div>
-      <div class="standout-desc">Advanced concept most beginners don't explore — sells stock you don't own, profits when price falls</div>
-    </div>
-    <div class="standout-card">
-      <div class="standout-title">F&O Paper Trading</div>
-      <div class="standout-desc">Rare for a beginner project — includes full futures margin calculation and options CE/PE support</div>
-    </div>
-    <div class="standout-card">
-      <div class="standout-title">SQLite Persistence</div>
-      <div class="standout-desc">Trade history saved permanently — survives app restarts, demonstrates real database skills</div>
-    </div>
-    <div class="standout-card">
-      <div class="standout-title">SQLAlchemy ORM</div>
-      <div class="standout-desc">Professional coding practice — uses Python classes instead of raw SQL queries</div>
-    </div>
-    <div class="standout-card">
-      <div class="standout-title">Risk Management</div>
-      <div class="standout-desc">Stop loss and target price on every trade — shows real trading discipline and risk awareness</div>
-    </div>
-  </div>
-
-  <!-- What I Learned -->
-  <div class="section-head">Takeaways</div>
-  <h2>What I Learned</h2>
-  <ul>
-    <li><strong>SQLite</strong> — lightweight database stored as a single file, no server needed. Create tables, insert, query and delete records using Python</li>
-    <li><strong>SQLAlchemy ORM</strong> — work with Python classes instead of raw SQL, much cleaner and safer</li>
-    <li><strong>Short Selling</strong> — sell a stock you don't own, buy back at lower price to profit. How hedge funds make money in falling markets</li>
-    <li><strong>Futures Trading</strong> — contract to buy/sell at a future date, requires only ~15% margin, leveraged instrument</li>
-    <li><strong>Options Trading</strong> — CE (Call) profits when price rises, PE (Put) profits when price falls. BUY = limited loss, WRITE = collect premium with unlimited risk</li>
-    <li><strong>All Order Types</strong> — LIMIT, MARKET, SL and SL-M and when each is appropriate</li>
-    <li><strong>Streamlit Caching</strong> — @st.cache_data(ttl=300) refreshes prices every 5 minutes, not on every click</li>
-    <li><strong>Data Persistence</strong> — SQLite saves every trade permanently even after app is closed and reopened weeks later</li>
-  </ul>
-
-  <!-- Screen Recording -->
   <div class="section-head">Output Demo</div>
   <h2>Screen Recordings</h2>
 
@@ -283,14 +168,11 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     </video>
   </div>
   <p style="font-size:13px;color:var(--text3);font-family:'IBM Plex Mono',monospace;letter-spacing:0.5px;margin-bottom:1.5rem">Both trades were executed as MIS (Margin Intraday Square-off) — opened and closed within the same trading session using virtual money.</p>
+
 </div>
 
 <footer>
   <div class="footer-name">SUSHM<span>ITHA</span></div>
-  <div class="footer-links">
-    <a href="mailto:8sushmithareddy8@gmail.com">8sushmithareddy8@gmail.com</a>
-    
-  </div>
   <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
 </footer>
 
