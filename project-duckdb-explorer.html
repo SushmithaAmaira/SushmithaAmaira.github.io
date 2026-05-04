@@ -190,18 +190,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
 
   </div>
 
-  <!-- How I built it -->
-  <div class="section-head">Process</div>
-  <h2>How I Learned It Step by Step</h2>
-  <div class="step-list">
-    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Installed DuckDB</div><div class="step-desc">Installed DuckDB with a single pip command — no server setup, no configuration. It works as a Python library directly in your script.</div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Downloaded sample CSV datasets</div><div class="step-desc">Downloaded a customers CSV with 1,00,000 rows and a products CSV with 10,00,000+ rows from public dataset sources to experiment with.</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Queried CSV files directly</div><div class="step-desc">Discovered I could write SELECT * FROM 'file.csv' WHERE ... and DuckDB would query it instantly without any import step — this was the biggest surprise.</div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Built interactive country filter</div><div class="step-desc">Used Python's input() to prompt for a country name and inject it into a DuckDB SQL query dynamically — turned a static query into an interactive CLI tool.</div></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Added currency conversion</div><div class="step-desc">Applied ROUND(Price * 93.09) inside the SQL SELECT statement to convert all USD prices to INR in a single query — no extra processing needed.</div></div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Exported filtered data to CSV</div><div class="step-desc">Used COPY (...query...) TO 'output.csv' (HEADER, DELIMITER ',') to export only the filtered rows to a new clean file.</div></div></div>
-  </div>
-
   <!-- Code Snippets -->
   <div class="section-head">Code</div>
   <h2>Key SQL Queries</h2>
@@ -286,8 +274,6 @@ FILE = <span class="c-str">r"C:\Users\nithi\Downloads\customers-100000.csv"</spa
   <ul>
     <li><strong>DuckDB queries CSV files directly</strong> — no import, no database setup, just reference the file path in FROM and it works instantly</li>
     <li><strong>Speed at scale</strong> — querying 10,00,000+ rows takes under a second on a regular laptop — far faster than pandas for large files</li>
-    <li><strong>ROUND() for currency</strong> — eliminates floating-point precision issues when multiplying prices by exchange rates</li>
-    <li><strong>COPY TO for exports</strong> — a one-liner to export any SQL query result directly to a CSV file</li>
     <li><strong>Dynamic SQL with Python</strong> — using Python's input() + f-strings to build interactive, user-driven SQL queries</li>
     <li><strong>Vibe coding with Claude</strong> — describing what I want in plain English and getting working SQL back — this is how I get things done efficiently</li>
   </ul>
@@ -310,8 +296,8 @@ FILE = <span class="c-str">r"C:\Users\nithi\Downloads\customers-100000.csv"</spa
 <footer>
   <div class="footer-name">SUSHM<span>ITHA</span></div>
   <div class="footer-links">
-    <a href="mailto:dhjdhjsdh@gmail.com">dhjdhjsdh@gmail.com</a>
-    <a href="https://github.com/SushmithaAmaira" target="_blank">github.com/SushmithaAmaira</a>
+    <a href="mailto:8sushmithareddy8@gmail.com">8sushmithareddy8@gmail.com</a>
+    
   </div>
   <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
 </footer>
