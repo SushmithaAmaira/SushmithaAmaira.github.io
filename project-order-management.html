@@ -124,65 +124,22 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
 <div class="proj-hero">
   <a href="projects.html" class="back-link">← All Projects</a>
   <div class="proj-meta-row">
+    <span class="meta-tag" style="background:var(--teal);color:#fff;font-weight:700">Kite Connect API</span>
     <span class="meta-tag">Python</span>
     <span class="meta-tag">Streamlit</span>
-    <span class="meta-tag">Kite Connect API</span>
     <span class="meta-tag">Pandas</span>
     <span class="meta-tag">NSE / BSE</span>
   </div>
-  <h1 class="proj-hero-title">🏦 Order Management System</h1>
+  <h1 class="proj-hero-title">Order Management System</h1>
   <p class="proj-hero-sub">A real trading interface to place actual buy and sell orders on NSE/BSE stocks directly through a Zerodha account — all from a clean Streamlit web dashboard. No need to open the Zerodha app — just open the dashboard, type the stock, enter the price, and place the order.</p>
 </div>
 
 <div class="proj-body">
 
-  <!-- Overview -->
   <div class="info-grid">
     <div class="info-card"><div class="info-label">Framework</div><div class="info-val">Streamlit</div></div>
     <div class="info-card"><div class="info-label">API</div><div class="info-val">Kite Connect Personal</div></div>
     <div class="info-card"><div class="info-label">Orders Placed</div><div class="info-val">Real ✅ (IOB Stock)</div></div>
-  </div>
-
-  <!-- What I Built -->
-  <div class="section-head">Overview</div>
-  <h2>What I Built</h2>
-  <p>A full-stack <strong>order management system</strong> using Zerodha's Kite Connect Personal API and Streamlit. The dashboard supports market and limit orders, CNC and MIS product types, regular and After Market Orders (AMO) — all using only the <strong>free tier of Kite Connect API</strong>.</p>
-  <p>Most impressively — I successfully placed a <strong>real LIMIT order for IOB stock</strong> and saw it execute with COMPLETE status in the order history. This is a live, functional trading tool.</p>
-
-  <!-- Dashboard Sections -->
-  <div class="section-head">Dashboard</div>
-  <h2>6 Sections Inside the Dashboard</h2>
-  <div class="sections-grid">
-    <div class="section-card">
-      <div class="section-num">Section 01</div>
-      <div class="section-name">💰 Available Funds</div>
-      <div class="section-desc">Shows real Zerodha account balance — available cash, used margin, net balance and opening balance</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 02</div>
-      <div class="section-name">📋 Place New Order</div>
-      <div class="section-desc">3-step order form — select stock, choose order details (BUY/SELL, LIMIT/MARKET, CNC/MIS, Regular/AMO), then confirm and place</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 03</div>
-      <div class="section-name">📊 Today's Orders</div>
-      <div class="section-desc">All orders placed today — colour coded green for BUY, red for SELL, purple for AMO. Cancel any pending order directly</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 04</div>
-      <div class="section-name">📈 Open Positions</div>
-      <div class="section-desc">All live intraday positions with real-time P&amp;L display</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 05</div>
-      <div class="section-name">🗂️ Holdings</div>
-      <div class="section-desc">All delivery holdings from the Zerodha account displayed in a clean table</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 06</div>
-      <div class="section-name">📖 Quick Guide</div>
-      <div class="section-desc">Reference section explaining order types, product types and market timing for quick lookup</div>
-    </div>
   </div>
 
   <!-- Order Flow -->
@@ -216,54 +173,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     </tbody>
   </table>
 
-  <!-- Steps -->
-  <div class="section-head">Process</div>
-  <h2>How I Built It Step by Step</h2>
-  <div class="step-list">
-    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Built the base dashboard</div><div class="step-desc">Created the Streamlit app with funds display, order form, orders table, positions and holdings sections.</div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Added AMO Support</div><div class="step-desc">Added After Market Order support so orders can be placed even when the market is closed — they execute next morning at 9:15 AM.</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Fixed IP Registration</div><div class="step-desc">Faced a SEBI regulation error — "No IPs configured". Learned about SEBI's IP whitelisting requirement and registered my home IP on developers.kite.trade.</div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Fixed Market Order Error</div><div class="step-desc">Kite API rejects market orders without market protection — switched to LIMIT orders as the default and safer option.</div></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Fixed Price Input Bug</div><div class="step-desc">The number_input box was resetting to 100 every time the form was interacted with — replaced it with text_input so any price like 426 or 18.50 can be freely typed.</div></div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Fixed Stock Selection Bug</div><div class="step-desc">When dropdown and text box both had values they conflicted — fixed the logic so typed symbol always takes priority over dropdown.</div></div></div>
-    <div class="step"><div class="step-num">7</div><div class="step-content"><div class="step-title">Successfully placed real orders! ✅</div><div class="step-desc">Placed a real order for IOB stock — the order appeared in Today's Orders table with COMPLETE status.</div></div></div>
-  </div>
-
-  <!-- Achievements -->
-  <div class="section-head">Achievements</div>
-  <h2>What I Successfully Did</h2>
-  <div class="achievements">
-    <div class="achievement"><span class="achievement-tick">✅</span><span class="achievement-text">Connected to Zerodha Kite Connect API and authenticated successfully</span></div>
-    <div class="achievement"><span class="achievement-tick">✅</span><span class="achievement-text">Fetched real account funds and balance from a live Zerodha account</span></div>
-    <div class="achievement"><span class="achievement-tick">✅</span><span class="achievement-text">Placed a real LIMIT order for IOB stock and saw it execute</span></div>
-    <div class="achievement"><span class="achievement-tick">✅</span><span class="achievement-text">Order appeared in Today's Orders table with COMPLETE status</span></div>
-    <div class="achievement"><span class="achievement-tick">✅</span><span class="achievement-text">Built AMO support for after-hours trading</span></div>
-    <div class="achievement"><span class="achievement-tick">✅</span><span class="achievement-text">Registered IP address on Kite developer console — learned SEBI compliance</span></div>
-    <div class="achievement"><span class="achievement-tick">✅</span><span class="achievement-text">Built a cancel order feature for pending orders directly from the dashboard</span></div>
-  </div>
-
-  <!-- Important Warnings -->
-  <div class="section-head">Important Notes</div>
-  <h2>Things to Know</h2>
-  <div class="warnings-grid">
-    <div class="warning-card">
-      <div class="warning-title">⚠️ Real Money</div>
-      <div class="warning-desc">Every order placed uses real money from the Zerodha account</div>
-    </div>
-    <div class="warning-card">
-      <div class="warning-title">🌐 IP Changes</div>
-      <div class="warning-desc">If home internet IP changes, it must be re-registered on developers.kite.trade</div>
-    </div>
-    <div class="warning-card">
-      <div class="warning-title">🕐 Market Hours</div>
-      <div class="warning-desc">Regular orders only work Mon–Fri 9:15 AM – 3:30 PM IST</div>
-    </div>
-    <div class="warning-card">
-      <div class="warning-title">🔑 Access Token</div>
-      <div class="warning-desc">Must regenerate access token daily using auth.py before running the dashboard</div>
-    </div>
-  </div>
-
   <div class="section-head">Output Demo</div>
   <h2>Screen Recording</h2>
   <div class="video-label">Live dashboard running in browser</div>
@@ -281,25 +190,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     <img src="screenshot.jpg" alt="Zerodha Kite order execution" style="width:100%;display:block"/>
   </div>
 
-  <!-- Takeaways -->
-  <div class="section-head">Takeaways</div>
-  <h2>What I Learned</h2>
-  <ul>
-    <li><strong>LIMIT vs MARKET orders</strong> — LIMIT executes only at your specified price; MARKET executes at whatever price is available</li>
-    <li><strong>CNC vs MIS</strong> — CNC is for delivery (hold as long as you want); MIS is intraday only (auto-closes by 3:20 PM)</li>
-    <li><strong>AMO orders</strong> — After Market Orders placed after 3:30 PM execute next morning at 9:15 AM</li>
-    <li><strong>SEBI IP Whitelisting</strong> — As of April 2026, all API-based orders must come from a registered IP address</li>
-    <li><strong>Kite Connect Order Flow</strong> — How an order travels from dashboard → Zerodha servers → NSE/BSE exchange → execution</li>
-    <li><strong>Safety features</strong> — Built confirmation checkbox and max order value limit in config.py to prevent accidental large orders</li>
-  </ul>
 </div>
 
 <footer>
   <div class="footer-name">SUSHM<span>ITHA</span></div>
-  <div class="footer-links">
-    <a href="mailto:8sushmithareddy8@gmail.com">8sushmithareddy8@gmail.com</a>
-    
-  </div>
   <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
 </footer>
 
