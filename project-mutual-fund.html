@@ -119,64 +119,23 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
 <div class="proj-hero">
   <a href="projects.html" class="back-link">← All Projects</a>
   <div class="proj-meta-row">
+    <span class="meta-tag" style="background:var(--teal);color:#fff;font-weight:700">Kite Connect API</span>
     <span class="meta-tag">Python</span>
     <span class="meta-tag">Streamlit</span>
-    <span class="meta-tag">Kite Connect API</span>
     <span class="meta-tag">Plotly</span>
     <span class="meta-tag">Pandas</span>
   </div>
-  <h1 class="proj-hero-title">📊 Mutual Fund Analytics Dashboard</h1>
-  <p class="proj-hero-sub">A complete mutual fund analytics dashboard showing my entire investment journey in the Zerodha Nifty LargeMidcap 250 Index Fund — with live data, NAV history, and every single transaction displayed beautifully using Streamlit.</p>
+  <h1 class="proj-hero-title">Mutual Fund Analytics Dashboard</h1>
+  <p class="proj-hero-sub">I have built a complete mutual fund analytics dashboard displaying my entire investment journey in the mutual funds that I had invested into over the past years. I had invested in the Zerodha Nifty LargeMidcap 250 Index Fund and this dashboard showcases every detail of my investment along with the Fund details according to my personalized version.</p>
+  <p class="proj-hero-sub" style="margin-top:1rem">With the help of vibe coding on Claude AI, I built this Streamlit web dashboard with interactive sections that combine three different data sources — Zerodha's Kite Connect API, MFAPI, and my CAMS statement. Everything is tied together in Python and displayed with Plotly charts.</p>
 </div>
 
 <div class="proj-body">
 
-  <!-- Overview -->
   <div class="info-grid">
     <div class="info-card"><div class="info-label">Framework</div><div class="info-val">Streamlit</div></div>
     <div class="info-card"><div class="info-label">Data Sources</div><div class="info-val">Kite API + MFAPI + CAMS</div></div>
     <div class="info-card"><div class="info-label">Charts</div><div class="info-val">Plotly (Interactive)</div></div>
-  </div>
-
-  <!-- What I Built -->
-  <div class="section-head">Overview</div>
-  <h2>What I Built</h2>
-  <p>A <strong>Streamlit web dashboard</strong> with 6 interactive sections that combines three different data sources — Zerodha's Kite Connect API for live holdings, MFAPI for full NAV history, and my CAMS statement for complete transaction history. Everything is tied together in Python and displayed with Plotly charts.</p>
-
-  <!-- Dashboard Sections -->
-  <div class="section-head">Dashboard</div>
-  <h2>6 Sections Inside the Dashboard</h2>
-  <div class="sections-grid">
-    <div class="section-card">
-      <div class="section-num">Section 01</div>
-      <div class="section-name">Live Portfolio Summary</div>
-      <div class="section-desc">9 metric cards showing total purchased, redeemed, net invested, current value, P&amp;L, units, NAV and transaction counts</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 02</div>
-      <div class="section-name">Complete Transaction Table</div>
-      <div class="section-desc">Every transaction since inception — colour coded green for purchases and red for redemptions</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 03</div>
-      <div class="section-name">Unit Balance Timeline Chart</div>
-      <div class="section-desc">Interactive line chart showing how units grew and fell over time with triangle markers on each transaction</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 04</div>
-      <div class="section-name">Cumulative Investment Chart</div>
-      <div class="section-desc">Shows how much was invested vs redeemed over time on a single interactive chart</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 05</div>
-      <div class="section-name">NAV History + Transactions</div>
-      <div class="section-desc">Full NAV chart from inception with buy/sell points marked directly on it — very impressive visually</div>
-    </div>
-    <div class="section-card">
-      <div class="section-num">Section 06</div>
-      <div class="section-name">Fund Information</div>
-      <div class="section-desc">All fund details — expense ratio, benchmark, inception date, risk level and more</div>
-    </div>
   </div>
 
   <!-- Tech Stack -->
@@ -195,19 +154,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     </tbody>
   </table>
 
-  <!-- How I built it -->
-  <div class="section-head">Process</div>
-  <h2>How I Built It</h2>
-  <div class="step-list">
-    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Discovered Kite Connect MF API</div><div class="step-desc">Found that kite.mf_holdings(), kite.mf_sips() and kite.mf_orders() are all free with Kite Connect Personal API.</div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Fetched live MF data</div><div class="step-desc">Ran Python commands to see actual live holdings — 6,155.721 units of Zerodha Nifty LargeMidcap 250.</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Discovered the 7-day limit</div><div class="step-desc">Found that mf_orders() only gives the last 7 days — not full history. Needed another solution.</div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Found MFAPI solution</div><div class="step-desc">Discovered mfapi.in — a completely free public API that gives full NAV history since fund inception (Nov 2023). No authentication needed.</div></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Got CAMS Statement</div><div class="step-desc">Went to camsonline.com → MF Investors → CAS-CAMS+KFintech → Downloaded detailed statement → Got complete transaction history.</div></div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Built the dashboard</div><div class="step-desc">Combined all 3 data sources into one Streamlit app with 6 sections — live data, transaction history, and 4 interactive Plotly charts.</div></div></div>
-    <div class="step"><div class="step-num">7</div><div class="step-content"><div class="step-title">Fixed compatibility & ran it</div><div class="step-desc">Fixed pandas 3.0 compatibility issue (applymap → map), then ran streamlit run app.py — full dashboard live in browser with real data!</div></div></div>
-  </div>
-
   <!-- Screen Recording -->
   <div class="section-head">Output Demo</div>
   <h2>Screen Recording</h2>
@@ -219,25 +165,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     </video>
   </div>
 
-  <!-- What I learned -->
-  <div class="section-head">Takeaways</div>
-  <h2>What I Learned</h2>
-  <ul>
-    <li>How to combine 3 different data sources — Kite Connect, MFAPI, and CAMS — into one unified dashboard</li>
-    <li>MFAPI gives free historical NAV data for all Indian mutual funds — no authentication needed</li>
-    <li>Using @st.cache_data with different TTLs for different data types (5 min for live data, 1 hour for NAV history)</li>
-    <li>Overlaying transaction markers directly on a NAV history chart using Plotly</li>
-    <li>Real financial concepts — NAV, units, redemption, CAMS, ISIN</li>
-    <li>Pandas cumulative calculations for running balances and investment totals</li>
-  </ul>
 </div>
 
 <footer>
   <div class="footer-name">SUSHM<span>ITHA</span></div>
-  <div class="footer-links">
-    <a href="mailto:8sushmithareddy8@gmail.com">8sushmithareddy8@gmail.com</a>
-    
-  </div>
   <div class="footer-copy">© 2026 R Sushmitha · Built with ♥ in Bengaluru</div>
 </footer>
 
