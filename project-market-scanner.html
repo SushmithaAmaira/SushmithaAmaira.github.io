@@ -104,67 +104,18 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
 <div class="proj-hero">
   <a href="projects.html" class="back-link">← All Projects</a>
   <div class="proj-meta-row">
+    <span class="meta-tag" style="background:var(--teal);color:#fff;font-weight:700">Kite Connect API</span>
     <span class="meta-tag">Python</span>
     <span class="meta-tag">Streamlit</span>
     <span class="meta-tag">yfinance</span>
-    <span class="meta-tag" style="background:var(--teal);color:#fff;font-weight:700">Kite Connect API</span>
     <span class="meta-tag">Plotly</span>
     <span class="meta-tag">SQLite</span>
   </div>
   <h1 class="proj-hero-title">Hourly Market Scanner</h1>
-  <p class="proj-hero-sub">A Streamlit web app that scans hourly OHLC (Open, High, Low, Close) data for a custom watchlist of NSE stocks. Auto-runs every hour during market hours, shows historical hourly data for any day in the past week, and supports full watchlist management.</p>
+  <p class="proj-hero-sub">This is a background hourly market scanner where you can scan hourly OHLC (Open, High, Low, Close) data for a custom watchlist of NSE stocks. It is designed to auto-run every hour during market hours and shows the historical hourly data for any day in the past week, and also supports full watchlist management (add / edit / delete).</p>
 </div>
 
 <div class="proj-body">
-
-  <div class="info-grid">
-    <div class="info-card"><div class="info-label">Data Interval</div><div class="info-val">1 Hour OHLC</div></div>
-    <div class="info-card"><div class="info-label">Auto Scan</div><div class="info-val">09:15 – 15:30 IST</div></div>
-    <div class="info-card"><div class="info-label">History</div><div class="info-val">7 days lookback</div></div>
-  </div>
-
-  <div class="section-head">Overview</div>
-  <h2>What I Built</h2>
-  <p>A <strong>background hourly market scanner</strong> that automatically fetches OHLC data for a custom watchlist of NSE stocks every hour during market hours. The Streamlit dashboard has 4 tabs — live OHLC view, historical candlestick charts, watchlist management, and a scan schedule log.</p>
-  <p>The scanner runs as a <strong>background daemon thread</strong> using the schedule library, meaning it continues scanning even while you navigate between tabs. All scan logs are saved to JSON for reference.</p>
-
-  <div class="section-head">Dashboard</div>
-  <h2>4 Tabs Inside the App</h2>
-  <div class="tabs-grid">
-    <div class="tab-card">
-      <div class="tab-num">Tab 01</div>
-      <div class="tab-name">📊 Live OHLC</div>
-      <div class="tab-desc">Hourly OHLC table for all watchlist stocks — visual range bar showing where close sits between the day's high and low</div>
-    </div>
-    <div class="tab-card">
-      <div class="tab-num">Tab 02</div>
-      <div class="tab-name">📉 Historical</div>
-      <div class="tab-desc">Interactive candlestick chart and OHLC table for any stock on any day in the past week — hour by hour</div>
-    </div>
-    <div class="tab-card">
-      <div class="tab-num">Tab 03</div>
-      <div class="tab-name">📋 Watchlist</div>
-      <div class="tab-desc">Add single stocks, bulk add multiple, edit, delete. Auto-import your Zerodha holdings directly into the watchlist with one click</div>
-    </div>
-    <div class="tab-card">
-      <div class="tab-num">Tab 04</div>
-      <div class="tab-name">🕐 Scan Schedule</div>
-      <div class="tab-desc">Today's full scan timeline, recent scan log, and a manual trigger button to run a scan immediately on demand</div>
-    </div>
-  </div>
-
-  <div class="section-head">Kite Connect APIs Used</div>
-  <h2>Free Tier APIs Only</h2>
-  <table class="kite-table">
-    <thead><tr><th>API</th><th>Used For</th></tr></thead>
-    <tbody>
-      <tr><td>kite.generate_session()</td><td>OAuth login — exchange request_token for access_token</td></tr>
-      <tr><td>kite.profile()</td><td>Show logged-in user name in sidebar</td></tr>
-      <tr><td>kite.holdings()</td><td>Auto-import your Zerodha stocks into the watchlist</td></tr>
-      <tr><td>kite.instruments("NSE")</td><td>Validate stock symbols and auto-fill company names</td></tr>
-    </tbody>
-  </table>
-  <p style="font-size:13px;color:var(--text3)">Note: ltp() and historical data are NOT used — those require paid plan. All price data comes from yfinance which is completely free.</p>
 
   <div class="section-head">Technology Stack</div>
   <h2>Tools Used</h2>
@@ -181,48 +132,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
       <tr><td>JSON</td><td>Local storage for watchlist and scan log</td></tr>
     </tbody>
   </table>
-
-  <div class="section-head">File Structure</div>
-  <h2>Project Files</h2>
-  <div class="file-structure">
-    <span class="folder">hourly_scanner/</span><br/>
-    ├── <span class="folder">app.py</span>          <span class="comment">← Streamlit UI — 4 tabs</span><br/>
-    ├── <span class="folder">auth.py</span>         <span class="comment">← Kite Connect OAuth login</span><br/>
-    ├── <span class="folder">scanner.py</span>      <span class="comment">← yfinance OHLC data fetcher (1h interval)</span><br/>
-    ├── <span class="folder">scheduler.py</span>    <span class="comment">← Background hourly auto-scan (schedule library)</span><br/>
-    ├── <span class="folder">watchlist.py</span>    <span class="comment">← Watchlist CRUD (saved to watchlist.json)</span><br/>
-    └── <span class="folder">requirements.txt</span><span class="comment">← All dependencies</span>
-  </div>
-
-  <div class="section-head">Process</div>
-  <h2>How I Built It</h2>
-  <div class="step-list">
-    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Decided what to build</div><div class="step-desc">Hourly OHLC scanner with auto-refresh, 7-day history, and full watchlist management — using only free data sources.</div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Chose data sources</div><div class="step-desc">yfinance for free 1h interval OHLC data (up to 7 days), Kite Connect free tier for profile, holdings and symbol validation, and the schedule library for background hourly jobs.</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Built 5 core files</div><div class="step-desc">auth.py for Kite OAuth, watchlist.py for JSON-based CRUD, scanner.py for yfinance with IST timezone conversion, scheduler.py for background daemon thread, and app.py for the full Streamlit UI.</div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Fixed st.stop() bug</div><div class="step-desc">st.stop() inside the Live OHLC tab was stopping ALL tabs from rendering when the watchlist was empty. Fixed by removing st.stop() and using an info message instead.</div></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Fixed widget key clash</div><div class="step-desc">Widget key "hist_sym" clashed with session state key "hist_sym" — Streamlit doesn't allow this. Fixed by renaming widget keys to wgt_hist_sym and storing results under hist_result_sym.</div></div></div>
-  </div>
-
-  <div class="section-head">How to Run</div>
-  <h2>Running the App</h2>
-  <div class="run-box">
-    <div class="run-label">Commands</div>
-    <div class="run-cmd">pip install -r requirements.txt<div class="run-note">First time only</div></div>
-    <div class="run-cmd">python -m streamlit run app.py<div class="run-note">Run the full dashboard every time</div></div>
-    <div class="run-cmd">python scheduler.py<div class="run-note">Standalone scanner — runs in background without UI</div></div>
-  </div>
-
-  <div class="section-head">Takeaways</div>
-  <h2>What I Learned</h2>
-  <ul>
-    <li><strong>Background threads in Streamlit</strong> — using Python's threading module to run hourly scans while the UI stays responsive</li>
-    <li><strong>OHLC data</strong> — understanding Open, High, Low, Close and what each tells you about price action within a time period</li>
-    <li><strong>yfinance intervals</strong> — 1h interval data is available for the last 7 days for all NSE stocks</li>
-    <li><strong>IST timezone handling</strong> — NSE market data comes in UTC, must convert to IST for correct display</li>
-    <li><strong>Streamlit session state</strong> — widget keys and session state keys cannot overlap — fixed by using separate naming conventions</li>
-    <li><strong>JSON as a lightweight database</strong> — perfect for simple watchlists and scan logs without needing SQLite or a full database</li>
-  </ul>
 
   <div class="section-head">Output Demo</div>
   <h2>Screen Recording</h2>
