@@ -99,56 +99,18 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
 <div class="proj-hero">
   <a href="projects.html" class="back-link">← All Projects</a>
   <div class="proj-meta-row">
+    <span class="meta-tag" style="background:var(--teal);color:#fff;font-weight:700">Kite Connect API</span>
     <span class="meta-tag">Python</span>
     <span class="meta-tag">Streamlit</span>
     <span class="meta-tag">yfinance</span>
     <span class="meta-tag">MFAPI</span>
-    <span class="meta-tag" style="background:var(--teal);color:#fff;font-weight:700">Kite Connect API</span>
     <span class="meta-tag">Plotly</span>
   </div>
-  <h1 class="proj-hero-title">💰 SIP Calculator & Planner</h1>
-  <p class="proj-hero-sub">A Streamlit web app that simulates what would have happened if you had started a SIP in any NSE stock, index, or Indian mutual fund from any past date — showing real historical returns, XIRR and automatic comparison against the Nifty 50 benchmark.</p>
+  <h1 class="proj-hero-title">SIP Calculator &amp; Planner</h1>
+  <p class="proj-hero-sub">I have built a Streamlit web app that simulates what would have happened if I had started a SIP in any NSE stock, index, or Indian mutual fund from any past date — showing real historical returns, XIRR and automatic comparison against the Nifty 50 benchmark. Enter any stock symbol or fund name, set a monthly SIP amount and start date, and the app calculates exactly what your investment would be worth today.</p>
 </div>
 
 <div class="proj-body">
-
-  <div class="info-grid">
-    <div class="info-card"><div class="info-label">Coverage</div><div class="info-val">Stocks · Indices · MFs</div></div>
-    <div class="info-card"><div class="info-label">Data</div><div class="info-val">yfinance + MFAPI</div></div>
-    <div class="info-card"><div class="info-label">Returns Calc</div><div class="info-val">XIRR (annualised)</div></div>
-  </div>
-
-  <div class="section-head">Overview</div>
-  <h2>What I Built</h2>
-  <p>A <strong>SIP backtest simulator</strong> for any NSE stock, index or Indian mutual fund. Enter any stock symbol or fund name, set a monthly SIP amount and start date, and the app calculates exactly what your investment would be worth today — with <strong>XIRR</strong>, a Nifty 50 benchmark comparison, month-wise breakdown table, and interactive Plotly charts.</p>
-  <p>The app uses a smart <strong>hybrid architecture</strong> — yfinance for all historical stock/index data, MFAPI for mutual fund NAV history, and Kite Connect optionally for live prices and your actual Zerodha MF holdings.</p>
-
-  <div class="section-head">Key Features</div>
-  <h2>What the App Can Do</h2>
-  <div class="features-grid">
-    <div class="feature-card"><div class="feature-icon">📈</div><div class="feature-text"><strong>Any NSE stock or index</strong> — RELIANCE, TCS, NIFTY, BANKNIFTY and more from 2000 onwards</div></div>
-    <div class="feature-card"><div class="feature-icon">🏦</div><div class="feature-text"><strong>Any Indian mutual fund</strong> — search by keyword like "Zerodha Nifty" or "Parag Parikh"</div></div>
-    <div class="feature-card"><div class="feature-icon">📊</div><div class="feature-text"><strong>XIRR calculation</strong> — true annualised return using actual monthly cash flows</div></div>
-    <div class="feature-card"><div class="feature-icon">⚖️</div><div class="feature-text"><strong>Nifty 50 benchmark</strong> — automatic comparison so you know if your pick beat the index</div></div>
-    <div class="feature-card"><div class="feature-icon">📉</div><div class="feature-text"><strong>Interactive Plotly chart</strong> — portfolio vs Nifty vs invested amount on one chart</div></div>
-    <div class="feature-card"><div class="feature-icon">📋</div><div class="feature-text"><strong>Month-wise SIP table</strong> — every monthly investment with units, NAV and running total</div></div>
-    <div class="feature-card"><div class="feature-icon">💾</div><div class="feature-text"><strong>CSV export</strong> — download the full SIP breakdown as a spreadsheet</div></div>
-    <div class="feature-card"><div class="feature-icon">🔓</div><div class="feature-text"><strong>Kite login optional</strong> — app works for everyone without Zerodha login via yfinance + MFAPI</div></div>
-  </div>
-
-  <div class="section-head">Architecture</div>
-  <h2>Smart Hybrid Data Sources</h2>
-  <table class="data-table">
-    <thead><tr><th>Data Type</th><th>Source</th><th>Free?</th><th>Login Needed?</th></tr></thead>
-    <tbody>
-      <tr><td>Stock historical prices</td><td>yfinance (Yahoo Finance)</td><td><span class="free-badge">✓ Free</span></td><td>No</td></tr>
-      <tr><td>Index historical prices</td><td>yfinance</td><td><span class="free-badge">✓ Free</span></td><td>No</td></tr>
-      <tr><td>MF historical NAV</td><td>MFAPI → AMFI (official)</td><td><span class="free-badge">✓ Free</span></td><td>No</td></tr>
-      <tr><td>Stock/Index live price</td><td>Kite Connect LTP (fallback: yfinance)</td><td><span class="free-badge">✓ Free</span></td><td>Optional</td></tr>
-      <tr><td>Your Zerodha MF holdings</td><td>Kite mf_holdings()</td><td><span class="free-badge">✓ Free</span></td><td>Yes</td></tr>
-      <tr><td>Your active SIPs</td><td>Kite mf_sips()</td><td><span class="free-badge">✓ Free</span></td><td>Yes</td></tr>
-    </tbody>
-  </table>
 
   <div class="section-head">Technology Stack</div>
   <h2>Tools Used</h2>
@@ -165,39 +127,6 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
       <tr><td>Python</td><td>Everything tied together</td></tr>
     </tbody>
   </table>
-
-  <div class="section-head">File Structure</div>
-  <h2>Project Files</h2>
-  <div class="file-structure">
-    <span class="folder">sip_calculator/</span><br/>
-    ├── <span class="folder">app.py</span>          <span class="comment">← Streamlit UI (two tabs: Stocks & MF)</span><br/>
-    ├── <span class="folder">auth.py</span>         <span class="comment">← Kite Connect OAuth login handler</span><br/>
-    ├── <span class="folder">sip_engine.py</span>   <span class="comment">← SIP simulation engine for stocks & indices</span><br/>
-    ├── <span class="folder">mf_data.py</span>      <span class="comment">← Mutual fund data layer (MFAPI + Kite MF API)</span><br/>
-    └── <span class="folder">requirements.txt</span><span class="comment">← All dependencies</span>
-  </div>
-
-  <div class="section-head">Process</div>
-  <h2>How I Built It</h2>
-  <div class="step-list">
-    <div class="step"><div class="step-num">1</div><div class="step-content"><div class="step-title">Decided what to build</div><div class="step-desc">SIP backtest simulator showing total invested, current value, XIRR and Nifty 50 comparison — using only free data sources.</div></div></div>
-    <div class="step"><div class="step-num">2</div><div class="step-content"><div class="step-title">Discovered Kite Connect limitations</div><div class="step-desc">Kite Connect's historical data endpoint requires a paid plan (₹2,000/month) and daily OAuth re-login — not suitable as the primary data source.</div></div></div>
-    <div class="step"><div class="step-num">3</div><div class="step-content"><div class="step-title">Switched to yfinance</div><div class="step-desc">yfinance is 100% free, needs no API key, and has data going back to the 1990s for all NSE stocks (.NS), BSE stocks (.BO) and indices (^NSEI for Nifty 50).</div></div></div>
-    <div class="step"><div class="step-num">4</div><div class="step-content"><div class="step-title">Built hybrid architecture</div><div class="step-desc">yfinance handles all historical data, Kite Connect provides live real-time price if the user is logged in, with graceful fallback to yfinance's last close if not.</div></div></div>
-    <div class="step"><div class="step-num">5</div><div class="step-content"><div class="step-title">Added Mutual Funds support</div><div class="step-desc">Built a new hybrid for mutual funds — MFAPI for full historical NAV data (sourced from AMFI, the official regulator) and Kite MF API for current NAV and user's actual holdings.</div></div></div>
-    <div class="step"><div class="step-num">6</div><div class="step-content"><div class="step-title">Fixed bugs and theme issues</div><div class="step-desc">Fixed yf.fast_info reliability issues for Indian stocks, expanded symbol map with 15+ index aliases, and fixed CSS dark theme override by replacing hardcoded colours with Streamlit CSS variables.</div></div></div>
-  </div>
-
-  <div class="section-head">Takeaways</div>
-  <h2>What I Learned</h2>
-  <ul>
-    <li><strong>XIRR</strong> — the correct way to measure investment returns when cash flows happen at irregular intervals (like monthly SIPs)</li>
-    <li><strong>Hybrid API architecture</strong> — combining multiple free data sources with graceful fallbacks when optional paid sources are unavailable</li>
-    <li><strong>MFAPI + AMFI</strong> — India's official mutual fund NAV data is publicly available for free via AMFI, accessible through MFAPI</li>
-    <li><strong>yfinance for Indian markets</strong> — NSE stocks need .NS suffix, BSE need .BO, and indices use ^ prefix (^NSEI for Nifty 50)</li>
-    <li><strong>Benchmark comparison</strong> — always compare investment returns against an index to know if the stock actually added value</li>
-    <li><strong>Streamlit CSS variables</strong> — use var(--background-color) instead of hardcoded hex values for proper light/dark theme support</li>
-  </ul>
 
   <div class="section-head">Output Demo</div>
   <h2>Screen Recording</h2>
