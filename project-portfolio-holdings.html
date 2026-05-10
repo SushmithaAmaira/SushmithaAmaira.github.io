@@ -78,6 +78,9 @@ pre{padding:1rem 1.4rem;overflow-x:auto;font-family:'IBM Plex Mono',monospace;fo
 .video-title{font-size:16px;font-weight:800;color:var(--text);margin-bottom:0.4rem}
 .video-sub{font-size:13px;color:var(--text3)}
 
+.video-wrap{border-radius:12px;overflow:hidden;border:1px solid var(--border);margin-bottom:1.5rem;box-shadow:var(--card-shadow)}
+.video-wrap video{width:100%;display:block}
+.video-label{font-family:'IBM Plex Mono',monospace;font-size:10px;color:var(--text3);letter-spacing:1.5px;text-transform:uppercase;margin-bottom:8px}
 .nav-proj{display:flex;justify-content:space-between;border-top:1px solid var(--border);padding-top:2rem;margin-top:2rem}
 .nav-proj a{font-family:'IBM Plex Mono',monospace;font-size:12px;color:var(--text3);transition:color .2s}
 .nav-proj a:hover{color:var(--teal)}
@@ -116,16 +119,10 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     <span class="meta-tag">Plotly</span>
   </div>
   <h1 class="proj-hero-title">Portfolio Holdings Analyzer</h1>
-  <p class="proj-hero-sub">A custom portfolio analytics dashboard that connects directly to a Zerodha account and displays holdings with interactive charts, P&L calculations, sector allocation, and return percentages — built entirely in Python with no HTML or JavaScript.</p>
+  <p class="proj-hero-sub">I have built a personal portfolio dashboard that connects directly to my Zerodha account via the Kite Connect API, which fetches my live holdings data. It displays holdings with interactive charts, P&L calculations, sector allocation, and return percentages — built entirely in Python with no HTML or JavaScript.</p>
 </div>
 
 <div class="proj-body">
-
-  <div class="info-grid">
-    <div class="info-card"><div class="info-label">Framework</div><div class="info-val">Streamlit</div></div>
-    <div class="info-card"><div class="info-label">Charts</div><div class="info-val">Plotly (Interactive)</div></div>
-    <div class="info-card"><div class="info-label">Data Pipeline</div><div class="info-val">Kite → Pandas → Plotly</div></div>
-  </div>
 
   <!-- Data Pipeline -->
   <div class="section-head">Architecture</div>
@@ -147,128 +144,16 @@ footer{background:var(--bg2);border-top:1px solid var(--border);padding:2rem 2.5
     <div class="pipe-note">Data flows from Zerodha all the way to the browser, getting transformed at each step</div>
   </div>
 
-  <!-- What I Built -->
-  <div class="section-head">Overview</div>
-  <h2>What I Built</h2>
-  <p>A personal portfolio dashboard that replaces the default Zerodha app view with a <strong>custom analytics interface</strong>. It connects to Zerodha via the Kite Connect API, fetches live holdings data, calculates P&L and return percentages using Pandas, and visualises everything through interactive Plotly charts — all wrapped in a Streamlit web app.</p>
-  <p>The dashboard includes <strong>sector allocation</strong> (Banking, IT, EV etc.), per-stock P&L bar charts, return percentage analysis, metric summary cards, a colour-coded holdings table, and a refresh button — all built with pure Python, no HTML or JavaScript needed.</p>
-
-  <!-- Dashboard Features -->
-  <div class="section-head">Features</div>
-  <h2>What the Dashboard Shows</h2>
-  <div class="features-grid">
-    <div class="feature-card">
-      <span class="feature-icon">🥧</span>
-      <div class="feature-title">Sector Allocation Donut Chart</div>
-      <div class="feature-desc">Shows what % of your money is in Banking, IT, EV etc. — built from a custom sector map dictionary</div>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">📊</span>
-      <div class="feature-title">P&L Bar Chart (per stock)</div>
-      <div class="feature-desc">Horizontal bar chart — green bars for profit, red bars for loss — instantly see your winners and losers</div>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">📈</span>
-      <div class="feature-title">Return % Chart</div>
-      <div class="feature-desc">Vertical bar chart showing return percentage per stock — see which stocks are outperforming</div>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🔢</span>
-      <div class="feature-title">Metric Summary Cards</div>
-      <div class="feature-desc">Total invested, current value, overall P&L and return % — displayed as clean metric cards at the top</div>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🗂️</span>
-      <div class="feature-title">Colour-coded Holdings Table</div>
-      <div class="feature-desc">Full holdings table with green/red highlighting — all columns including symbol, qty, avg cost, LTP and P&L</div>
-    </div>
-    <div class="feature-card">
-      <span class="feature-icon">🔄</span>
-      <div class="feature-title">5-Minute Data Caching</div>
-      <div class="feature-desc">@st.cache_data(ttl=300) stores data in memory for 5 minutes — no unnecessary API calls on every click</div>
-    </div>
-  </div>
-
-  <!-- Key Code Snippets -->
-  <div class="section-head">Code</div>
-  <h2>Key Code Snippets</h2>
-
-  <div class="code-block">
-    <div class="code-header"><span class="code-filename">app.py — fetch holdings</span><span class="code-lang">Python</span></div>
-    <pre><span class="c-cm"># Connect to Kite and fetch live holdings</span>
-kite = <span class="c-fn">KiteConnect</span>(api_key=config.API_KEY)
-kite.<span class="c-fn">set_access_token</span>(config.ACCESS_TOKEN)
-raw = kite.<span class="c-fn">holdings</span>()  <span class="c-cm"># One line — returns all your stocks</span></pre>
-  </div>
-
-  <div class="code-block">
-    <div class="code-header"><span class="code-filename">app.py — pandas calculations</span><span class="code-lang">Python</span></div>
-    <pre><span class="c-cm"># Calculate P&L and return % using Pandas</span>
-df[<span class="c-str">"Invested"</span>]     = df[<span class="c-str">"Avg Cost"</span>] * df[<span class="c-str">"Qty"</span>]
-df[<span class="c-str">"Current Value"</span>] = df[<span class="c-str">"LTP"</span>] * df[<span class="c-str">"Qty"</span>]
-df[<span class="c-str">"Return %"</span>]      = ((df[<span class="c-str">"LTP"</span>] - df[<span class="c-str">"Avg Cost"</span>]) / df[<span class="c-str">"Avg Cost"</span>] * <span class="c-num">100</span>)</pre>
-  </div>
-
-  <div class="code-block">
-    <div class="code-header"><span class="code-filename">app.py — caching</span><span class="code-lang">Python</span></div>
-    <pre><span class="c-cm"># Cache data for 5 minutes — avoids hitting Kite API on every click</span>
-<span class="c-fn">@st.cache_data</span>(ttl=<span class="c-num">300</span>)
-<span class="c-kw">def</span> <span class="c-fn">fetch_holdings</span>(_kite):
-    <span class="c-kw">return</span> _kite.<span class="c-fn">holdings</span>()</pre>
-  </div>
-
-  <!-- Journey of one API call -->
-  <div class="section-head">Deep Dive</div>
-  <h2>What Happens When You Run the App</h2>
-  <div class="journey-list">
-    <div class="journey-step"><div class="journey-num">01</div><div class="journey-text">Streamlit starts a web server on your laptop</div></div>
-    <div class="journey-step"><div class="journey-num">02</div><div class="journey-text">Browser opens <strong>localhost:8501</strong></div></div>
-    <div class="journey-step"><div class="journey-num">03</div><div class="journey-text"><strong>get_kite()</strong> runs — creates a KiteConnect object with your API key and access token</div></div>
-    <div class="journey-step"><div class="journey-num">04</div><div class="journey-text"><strong>fetch_holdings(kite)</strong> runs — sends HTTP GET request to Zerodha's servers</div></div>
-    <div class="journey-step"><div class="journey-num">05</div><div class="journey-text">Zerodha validates your access token and returns your holdings as <strong>JSON</strong></div></div>
-    <div class="journey-step"><div class="journey-num">06</div><div class="journey-text">Pandas converts JSON → DataFrame, calculates <strong>Invested, Current Value, Return %</strong></div></div>
-    <div class="journey-step"><div class="journey-num">07</div><div class="journey-text">Sector map adds a <strong>"Sector"</strong> column to each stock for the pie chart</div></div>
-    <div class="journey-step"><div class="journey-num">08</div><div class="journey-text">Plotly creates <strong>pie chart and bar charts</strong> from the DataFrame</div></div>
-    <div class="journey-step"><div class="journey-num">09</div><div class="journey-text">Streamlit renders everything as a <strong>web app in your browser</strong></div></div>
-    <div class="journey-step"><div class="journey-num">10</div><div class="journey-text">Your beautiful portfolio dashboard is live! 🎉</div></div>
-  </div>
-
-  <!-- Why it impresses -->
-  <div class="section-head">Why It Stands Out</div>
-  <h2>What This Project Demonstrates</h2>
-  <table class="impress-table">
-    <thead><tr><th>What I Did</th><th>Skill It Demonstrates</th></tr></thead>
-    <tbody>
-      <tr><td>Connected to Kite Connect API</td><td>REST API integration skills</td></tr>
-      <tr><td>Used access tokens correctly</td><td>Understanding of authentication flows</td></tr>
-      <tr><td>Processed data with Pandas</td><td>Data engineering and manipulation</td></tr>
-      <tr><td>Built interactive Plotly charts</td><td>Data visualisation skills</td></tr>
-      <tr><td>Created a web app with Streamlit</td><td>Full-stack thinking in Python</td></tr>
-      <tr><td>Implemented 5-min caching</td><td>Performance optimisation awareness</td></tr>
-      <tr><td>Structured code into functions</td><td>Clean, readable code practices</td></tr>
-      <tr><td>Used config.py for settings</td><td>Professional project structure</td></tr>
-    </tbody>
-  </table>
-
-  <!-- Takeaways -->
-  <div class="section-head">Takeaways</div>
-  <h2>What I Learned</h2>
-  <ul>
-    <li><strong>REST API integration</strong> — Kite Connect communicates via HTTP GET requests, just like a browser loading a webpage</li>
-    <li><strong>Access token authentication</strong> — the two-step flow: request_token → access_token, used by Google, Twitter, GitHub and every major API</li>
-    <li><strong>Pandas DataFrames</strong> — converting raw JSON API data into structured tables with calculated columns</li>
-    <li><strong>Plotly interactive charts</strong> — px.pie() for donut charts, px.bar() for horizontal and vertical bar charts, all hoverable and zoomable</li>
-    <li><strong>Streamlit web apps</strong> — st.metric(), st.columns(), st.plotly_chart(), st.dataframe() — full web app in pure Python</li>
-    <li><strong>Data caching</strong> — @st.cache_data(ttl=300) stores data in memory for 5 minutes, a technique used in production systems at every major tech company</li>
-  </ul>
-
   <div class="section-head">Output Demo</div>
   <h2>Screen Recording</h2>
-  <div class="video-placeholder">
-    <div class="video-icon">🎥</div>
-    <div class="video-title">Screen Recording Coming Soon</div>
-    <div class="video-sub">Upload your screen recording to showcase the portfolio dashboard in action.</div>
+  <div class="video-label">Live portfolio dashboard running in browser</div>
+  <div class="video-wrap">
+    <video controls>
+      <source src="Portfolio.mp4" type="video/mp4"/>
+      Your browser does not support the video tag.
+    </video>
   </div>
+
 </div>
 
 <footer>
